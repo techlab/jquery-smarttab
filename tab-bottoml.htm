@@ -2,37 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Smart Tab - a javascript jQuery tab control</title>
-<link href="styles/demo_style.css" rel="stylesheet" type="text/css">
 
 <link href="styles/smart_tab_bottom.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="js/jquery.smartTab.js"></script>
 
 <script type="text/javascript">
-   
     $(document).ready(function(){
     	// Smart Tab
   		$('#tabs').smartTab({transitionEffect:'fade'});
 		});
 </script>
-
 </head><body>
-  <div class="demoHead">   
-    <h1>Smart Tab - a javascript jQuery tab control</h1>
-    <h2>Example 3 : Bottom Layout</h2>
-  
-  <br />
-  <br />
-  
-    <a href="index.htm" class="btn">Basic Layout</a>
-    <a href="tab-vertical.htm" class="btn">Vertical Layout</a>
-    <a href="tab-bottoml.htm" class="selected">Bottom Layout</a>
-    <a href="http://techlaboratory.net/products.php?product=stab" class="btn">Go to Home</a>
-  </div>
-  
-<table border="0" cellpadding="0" cellspacing="0" align="center">
-<tr><td height="410px" valign="top">
-
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+<tr>
+  <td valign="top">
 <!-- Tabs -->
   		<div id="tabs" class="stContainer">
 
@@ -172,19 +156,8 @@
             </a></li>
   			</ul>
   		</div>
-  		
-</td></tr>
-<tr>
-<td>
-    <strong>Settings:</strong><br />
-    <strong>keyNavigation(true) :</strong> Use left and right arrow keys to navigate tab. 
-    <br /><strong>autoProgress(false) :</strong> no automatic navigation.
-    <br /><strong>stopOnFocus(false) :</strong> autoProgress is off and so this option is not used.    
-    <br /><strong>TransitionEffect(fade) :</strong> FadeIn/FadeOut effect on tab transition
-</td>
+  </td>
 </tr>
-</table>  
-
-<br /><br />  		
+</table>    		
 </body>
 </html>

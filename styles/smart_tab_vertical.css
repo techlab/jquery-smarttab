@@ -1,8 +1,15 @@
-
+/*   
+  SmartTab plugin v0.99
+  jQuery Tab Control Plugin
+  
+  http://tech-laboratory.blogspot.com
+  http://techlaboratory.wordpress.com
+*/
 .stContainer {
     position:relative;
     margin:0;
-    padding:0;          
+    padding:0;     
+    left:1%;     
     font: normal 12px Verdana, Arial, Helvetica, sans-serif; 
     color:              #5A5655;
     background-color:   #F8F8F8;

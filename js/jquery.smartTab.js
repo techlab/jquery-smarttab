@@ -1,7 +1,12 @@
 /*
- * SmartTab
- * a jQuery tab plugin
- * http://tech-laboratory.blogspot.com 
+ * SmartTab plugin v0.99
+ *
+ * jQuery Tab Control Plugin
+ * 
+ * Dips  
+ * 
+ * http://tech-laboratory.blogspot.com
+ * http://techlaboratory.wordpress.com
  */
  
 (function($){
