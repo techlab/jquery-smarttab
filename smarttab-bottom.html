@@ -3,32 +3,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Smart Tab - a javascript jQuery tab control</title>
 
-<link href="styles/smart_tab.css" rel="stylesheet" type="text/css"></link>
+<link href="styles/smart_tab_bottom.css" rel="stylesheet" type="text/css"></link>
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="js/jquery.smartTab.min.js"></script>
+<script type="text/javascript" src="js/jquery.smartTab.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function(){
     	// Smart Tab
-  		$('#tabs').smartTab({autoProgress: false,stopOnFocus:true,transitionEffect:'vSlide'});
+  		$('#tabs').smartTab({autoProgress: true,stopOnFocus:true,transitionEffect:'hSlide'});
 	});
-    
-    function showST(tab_index){
-      $('#tabs').smartTab('showTab',tab_index);
-    }    
 </script>
 </head><body>
 <table align="center" border="0" cellpadding="0" cellspacing="0">
 <tr>
   <td valign="top">
-    
-    External Anchors: 
-    <a class="stLinks" onclick="showST(0);" href="#">Show Tab 1</a>
-    <a class="stLinks" onclick="showST(1);" href="#">Show Tab 2</a>
-    <a class="stLinks" onclick="showST(2);" href="#">Show Tab 3</a>
-    <a class="stLinks" onclick="showST(3);" href="#">Show Tab 4</a>
-    <br /><br />
-    
 <!-- Tabs -->
   		<div id="tabs">
   			<ul>
@@ -88,21 +76,7 @@
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>  
-            <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>   
-            <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>            
+            </p>           
         </div>                      
   			<div id="tabs-3">
             <h2>Tab 3 Content</h2>	

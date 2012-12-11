@@ -1,119 +1,133 @@
-/*   
-  SmartTab plugin v0.99
-  jQuery Tab Control Plugin
-  
-  http://tech-laboratory.blogspot.com
-  http://techlaboratory.wordpress.com
-*/
-.stContainer {
-    position:relative;
-    margin:0;
-    padding:0;     
-    left:5%;     
-    font: normal 12px Verdana, Arial, Helvetica, sans-serif; 
-    color:              #5A5655;
-    background-color:   #F8F8F8;
-    border:             0px solid #CCC;
-    width:926px;
-    -webkit-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius  : 8px;
-    -moz-border-radius  : 8px;    
-}
-.stContainer div {
-   /* -webkit-border-radius: 5px; 
-    -webkit-border-top-left-radius
-    -webkit-border-top-right-radius */
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft   : 8px;
-    -moz-border-radius-topright  : 8px; 
-    position: relative;    
-    margin:             0;   
-    border:             1px solid #CCC;
-    padding:            10px;   
-    border-bottom-width: 0 !important;
-    height: 300px;
-    width:905px;
-    font: normal 12px Verdana, Arial, Helvetica, sans-serif; 
-    color:              #5A5655;   
-    background-color:   #F8F8F8;
-    text-align:left;
-    overflow:auto;    
-}
-.stContainer ul {
-    display:block;
-    list-style: none;    
-    position: relative;    
-    padding: 0px ;
-    padding-top: 0px;   
-    padding-right: 0px; 
-    padding-left: 5px;     
-    margin: 0;     
-    width:920px;
-    height:70px; 
-    clear: both;
-    border: 1px solid #CCCCCC;    
-    background: #EEEEEE;
-    -moz-border-radius-bottomleft      : 8px;
-    -moz-border-radius-bottomright     : 8px;
-    -moz-border-radius-topleft   : 0px;
-    -moz-border-radius-topright  : 0px; 
-    -webkit-border-bottom-left-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
-    -webkit-border-top-left-radius: 0px;
-    -webkit-border-top-right-radius: 0px;  
-}
-.stContainer ul li{ 
-    position: relative; 
-    margin: 0;
-    padding: 0;    
-    border-top: 0px solid #E0E0E0 !important; 
-    border-right: 1px solid #E0E0E0;  
-    border-left: 1px solid #E0E0E0;      
-    float: left;
-}
-.stContainer ul li a { 
-  display:block;
-  margin:0;
-  padding:3px;
-  text-decoration: none;
-  height:64px;
-  width:220px;
-  color:#0464BB;
-  outline-style:none;
-}
-.stContainer ul li a img { 
-  display:block;
-  margin:0;
-  padding:3px;
-  height:50px;
-  width:50px;
-  float:left;
-}
-.stContainer ul li a h2 { 
-  display:block;
-  font: bold 18px Verdana, Arial, Helvetica, sans-serif;
-  float:left;
-}
-.stContainer ul li a small { 
-  font: normal 12px Verdana, Arial, Helvetica, sans-serif;
-  float:left;
-}
-.stContainer ul li a:hover {   
-  color:#FFF; 
-  background: #EA8511; 
-}
-.stContainer ul li a.sel { 
+/*
+ * SmartTab plugin v2.0
+ * jQuery Tab Control Plugin
+ * 
+ * by Dipu Raj
+ * http://techlaboratory.net/smarttab
+ * 
+ * License 
+ * http://creativecommons.org/licenses/by-sa/3.0/  
+ */
+.stMain {
   position: relative;
-  top:-1px;
-  height:64px;
-  color:#EA8511;  
-  background: #F8F8F8;  
-  cursor:text;   
+  display:block;
+  margin:0;
+  padding:0;
+  color: #666666;
+  border: 0px solid #CCC;
+  font-family: "Segoe UI",Tahoma,arial,sans-serif;
+  font-size: 100%;
+  width:900px;
 }
-.stContainer ul li a.dis {
-  color:#CCCCCC;  
-  background: #F8F8F8;  
-  cursor:text;   
+.stContainer {
+  display:block;
+  margin:0;
+  padding:0;
+  border: 1px solid #CCC; 
+  height:450px;
+  overflow:hidden;  
+  position: relative;
+  min-height: 300px;
+}
+.stMain div.tabContent { 
+  display:block;
+  position: absolute;
+  margin:0;  
+  padding:10px;     
+  border: 0px solid #D4D4D4;    
+  background-color: #FFF;
+  text-align:left;
+  height:450px;
+}
+.stMain ul.tabAnchor {
+  position: absolute;
+  bottom: -30px;
+  display: block;
+  list-style-type: none;
+/*  position:relative;*/
+  padding:0;
+  margin:0;    
+  padding-left: 25px;
+/*  border-left: 1px solid #D4D4D4;*/
+  clear: both;
+/*  overflow: hidden;*/
+  z-index: 100;
+}
+.stMain ul.tabAnchor li{ 
+  position: relative; 
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+.stMain ul.tabAnchor li a { 
+  display:block;
+  margin:0;
+  margin-right: -1px;
+  padding:5px;  
+  height:50px;
+  width:200px;
+  font-size: 18px;
+  color:#666;
+  text-decoration: none;
+  outline-style:none;
+  border: 1px solid #D4D4D4;
+/*  border-bottom: 1px solid #D4D4D4;
+  border-right: 1px solid #D4D4D4;  
+  border-top: 1px solid #D4D4D4;*/
+  background: #f6f6f6; /* Old browsers */
+  background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */                                                                                
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */             
+  background: -webkit-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Chrome10+,Safari5.1+ */                                                                 
+  background: -o-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera 11.10+ */                                                                              
+  background: -ms-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */                                                                                    
+  background: linear-gradient(to bottom, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */                                                                                    
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */                                          
+}
+.stMain ul.tabAnchor li a small {
+  font-size:15px;
+}
+.stMain ul.tabAnchor li a:hover {
+  color:#FFF;
+  background: #00A7DB;
+}
+.stMain ul.tabAnchor li a.sel {
+  color:#00A7DB;
+/*  border-top-color: #FFF;*/
+  cursor:text;
+  background: rgb(249,249,249); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(249,249,249,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(249,249,249,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(249,249,249,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(249,249,249,1) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(249,249,249,1) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(249,249,249,1) 0%,rgba(255,255,255,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
+.loader{
+  position: absolute;
+  left:48%;
+  top:40%;
+  display:block;
+  margin:0;
+  padding:5px; 
+  padding-top: 35px;
+  font-size: 10px;
+  color:#666;
+  text-decoration: none;
+  outline-style:none;
+  border: 1px solid #D4D4D4;
+  background: #f6f6f6 url(../images/loader.gif) no-repeat 10px 10px ;
+}
+a.stLinks { 
+  margin:0;
+  padding:5px;
+  color:#666;
+  text-decoration: none;
+  outline-style:none;
+  border: 1px solid #D4D4D4;
+  background-color: #f6f6f6;
+ }
+a.stLinks:hover {
+  color:#FFF;
+  background-color: #00A7DB;
 }

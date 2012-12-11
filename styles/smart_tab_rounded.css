@@ -29,7 +29,7 @@
   min-height: 300px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  border-radius: 5px;    
+  border-radius: 5px;  
 }
 .stMain div.tabContent { 
   display:block;
@@ -46,24 +46,24 @@
   position:relative;
   padding:0;
   margin:0;    
+  margin-left: 20px;
   clear: both;
-  margin-right: -1px;
-  margin-top: 30px;
+  margin-bottom: -1px;
   z-index: 100;
-  float: left;
 }
 .stMain ul.tabAnchor li{ 
   position: relative; 
   margin: 0;
   padding: 0;
+  float: left;
 }
 .stMain ul.tabAnchor li a { 
   display:block;
   margin:0;
-  margin-bottom: 2px;
+  margin-right: 3px;
   padding:5px;  
   height:50px;
-  width:160px;
+  width:200px;
   font-size: 18px;
   color:#666;
   text-decoration: none;
@@ -76,10 +76,10 @@
   background: -o-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera 11.10+ */                                                                              
   background: -ms-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */                                                                                    
   background: linear-gradient(to bottom, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */                                                                                    
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */  
-  -webkit-border-radius: 5px 0px 0px 5px;
-  -moz-border-radius: 5px 0px 0px 5px;
-  border-radius: 5px 0px 0px 5px;  
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */                                          
+  -webkit-border-radius: 5px 5px 0px 0px;
+  -moz-border-radius: 5px 5px 0px 0px;
+  border-radius: 5px 5px 0px 0px;   
 }
 .stMain ul.tabAnchor li a small {
   font-size:15px;
@@ -90,7 +90,7 @@
 }
 .stMain ul.tabAnchor li a.sel {
   color:#00A7DB;
-  border-right-color: #FFF;
+  border-bottom-color: #FFF;
   cursor:text;
   background: rgb(249,249,249); /* Old browsers */
   background: -moz-linear-gradient(top, rgba(249,249,249,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
@@ -115,6 +115,9 @@
   outline-style:none;
   border: 1px solid #D4D4D4;
   background: #f6f6f6 url(../images/loader.gif) no-repeat 10px 10px ;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;   
 }
 a.stLinks { 
   margin:0;
