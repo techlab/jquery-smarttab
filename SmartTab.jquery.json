@@ -1,0 +1,27 @@
+{
+"name": "SmartTab",
+"title": "Smart Tab",
+"description": "flexible jQuery Tab Control plug-in.",
+"keywords": [
+"tab",
+"content"
+],
+"version": "2.0.0",
+"author": {
+"name": "Dipu Raj",
+"url": "http://techlaboratory.net/about"
+},
+"licenses": [
+{
+"type": "MIT",
+"url": "https://github.com/techlab/SmartTab/blob/master/MIT-LICENSE.txt"
+}
+],
+"bugs": "https://github.com/techlab/SmartTab/issues",
+"homepage": "http://techlaboratory.net/smarttab",
+"docs": "https://github.com/techlab/SmartTab",
+"download": "http://techlaboratory.net/smarttab",
+"dependencies": {
+"jquery": ">=1.5"
+}
+}

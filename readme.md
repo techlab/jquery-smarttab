@@ -33,5 +33,5 @@ Features
 
 License
 -------
-Creative Commons License
-Licensed under a [Creative Commons Attribution-ShareAlike 3.0 Unported License.](http://creativecommons.org/licenses/by-sa/3.0/)
+[MIT License](https://github.com/techlab/SmartTab/blob/master/MIT-LICENSE.txt)
+([more](http://en.wikipedia.org/wiki/MIT_License))
