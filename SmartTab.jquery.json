@@ -19,7 +19,7 @@
 ],
 "bugs": "https://github.com/techlab/SmartTab/issues",
 "homepage": "http://techlaboratory.net/smarttab",
-"docs": "https://github.com/techlab/SmartTab",
+"docs": "http://techlaboratory.net/smartwizard/documentation",
 "download": "http://techlaboratory.net/smarttab",
 "dependencies": {
 "jquery": ">=1.5"
