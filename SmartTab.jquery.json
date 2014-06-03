@@ -4,12 +4,14 @@
 "description": "flexible jQuery Tab Control plug-in.",
 "keywords": [
 "tab",
-"content"
+"content",
+"jquery",
+"ui"
 ],
 "version": "2.0.0",
 "author": {
 "name": "Dipu Raj",
-"url": "http://techlaboratory.net/about"
+"url": "http://dipuraj.me"
 },
 "licenses": [
 {

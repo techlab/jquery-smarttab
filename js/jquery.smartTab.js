@@ -1,12 +1,12 @@
-/*
- * SmartTab plugin v2.0
+/* SmartTab plugin v2.0
  * jQuery Tab Control Plugin
- * 
- * by Dipu Raj  
  * http://techlaboratory.net/smarttab
  * 
+ * by Dipu Raj  
+ * http://dipuraj.me
+ * 
  * License 
- * http://creativecommons.org/licenses/by-sa/3.0/  
+ * https://github.com/techlab/SmartTab/blob/master/MIT-LICENSE.txt 
  */
  
 (function($){

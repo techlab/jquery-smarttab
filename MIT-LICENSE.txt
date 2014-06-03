@@ -1,6 +1,7 @@
-Copyright 2013 Tech Laboratory, 
+Copyright Tech Laboratory, 
 Created by Dipu Raj
 http://techlaboratory.net
+http://dipuraj.me
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
