@@ -1,4 +1,4 @@
-SmartTrace
+Smart Tab
 ==========
 
 Overview
