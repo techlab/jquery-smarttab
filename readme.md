@@ -1,3 +1,6 @@
+SmartTrace
+==========
+
 Overview
 --------
 Smart Tab is a jQuery plugin for tabbed interface. It is flexible and very easy to implement. It has a lot of features that you will love and it is completely open source. It can load ajax contents, have a verity of themes, cool animation effects, event supports, easy to customize
