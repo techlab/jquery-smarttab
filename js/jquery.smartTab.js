@@ -65,6 +65,7 @@
                 
       function setEvents(){
         $(tabs).bind("click", function(e){
+          e.preventDefault();
           if(tabs.index(this)!=obj.data('curTabIdx')) {
             showTab(tabs.index(this));
             if(options.autoProgress) restartAutoProgress(); 
