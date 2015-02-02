@@ -65,10 +65,11 @@
                 
       function setEvents(){
         $(tabs).bind("click", function(e){
-          if(tabs.index(this)==obj.data('curTabIdx')) return false;
-          showTab(tabs.index(this));
-          if(options.autoProgress) restartAutoProgress();
-          return false;
+          e.preventDefault();
+          if(tabs.index(this)!=obj.data('curTabIdx')) {
+            showTab(tabs.index(this));
+            if(options.autoProgress) restartAutoProgress(); 
+          }
         });
 
         if(options.keyNavigation){
