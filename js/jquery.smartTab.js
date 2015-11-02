@@ -47,7 +47,8 @@
           var stt = getTabState();
           if(stt) st = stt;
         }
-        st = (st) ? st : 0;
+        if(!st || st > tabs.length)
+          st = 0;
         showTab(st);                                    
       }
                 
