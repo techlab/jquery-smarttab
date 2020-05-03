@@ -1,0 +1,30 @@
+{
+    "name": "techlab/jquery-smarttab",
+    "description": "The flexible jQuery tab control plugin",
+    "homepage": "http://techlaboratory.net/jquery-smarttab",
+    "license": "MIT",
+    "support": {
+        "source": "https://github.com/techlab/jquery-smarttab",
+        "issues": "https://github.com/techlab/jquery-smarttab/issues",
+        "docs": "http://techlaboratory.net/jquery-smarttab#documentation"
+        },
+    "keywords": [
+      "jQuery",
+      "Tabs",
+      "Steps",
+      "Bootstrap",
+      "Plugin",
+      "Step",
+      "ui",
+      "jquery-plugin"
+    ],
+    "authors": [
+        {
+            "name": "Dipu Raj",
+            "email": "hello@techlaboratory.net",
+            "homepage": "http://dipu.me"
+        }
+    ],
+    "require": {
+    }
+}

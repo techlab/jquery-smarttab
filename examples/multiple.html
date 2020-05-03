@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>jQuery Smart Tab - The flexible jQuery tab control plugin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Include SmartTab CSS -->
+    <link href="../dist/css/smart_tab_all.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Demo Page Style - You don't need -->
+    <style>
+    body {
+      padding-right: 5%;
+      padding-left: 5%;
+    }
+    </style>
+
+</head>
+<body>
+
+    <p>
+      <label>Theme:</label>
+      <select id="theme_selector">
+            <option value="default" selected>Default</option>
+            <option value="classic">Classic</option>
+            <option value="dark">Dark</option>
+            <option value="brick">Brick</option>
+            <option value="bstabs">Bootstrap Tabs</option>
+            <option value="bspills">Bootstrap Pills</option>
+            <option value="">No Theme</option>
+      </select>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" id="is_vertical" value="1" />
+      <label for="is_vertical">Vertical</label>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" id="is_justified" value="1" checked />
+      <label for="is_justified">Justified</label>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <label>Animation:</label>
+      <select id="animation">
+            <option value="none">None</option>
+            <option value="fade">Fade</option>
+            <option value="slide-horizontal">Slide Horizontal</option>
+            <option value="slide-vertical">Slide Vertical</option>
+            <option value="slide-swing">Slide Swing</option>
+      </select>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <label>Go To:</label>
+      <select id="got_to_tab">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+      </select>
+    </p>
+    <br />
+
+    <!-- SmartTab html -->
+    <div id="smarttab">
+
+        <ul class="nav">
+            <li>
+              <a class="nav-link" href="#tab-1">
+                <strong>Tab 1</strong> This is tab description
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="#tab-2">
+                <strong>Tab 2</strong> This is tab description
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="#tab-3">
+                <strong>Tab 3</strong> This is tab description
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="#tab-4">
+                <strong>Tab 4</strong> This is tab description
+              </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="tab-1" class="tab-pane" role="tabpanel">
+                <h3>Tab 1 Content</h3>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+            <div id="tab-2" class="tab-pane" role="tabpanel">
+                <h3>Tab 2 Content</h3>
+                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </div>
+            </div>
+            <div id="tab-3" class="tab-pane" role="tabpanel">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+            <div id="tab-4" class="tab-pane" role="tabpanel">
+                <h3>Tab 4 Content</h3>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+        </div>
+    </div>
+
+    <br /><br />
+    <p>
+      <label>Theme:</label>
+      <select id="theme_selector2">
+            <option value="default" selected>Default</option>
+            <option value="classic">Classic</option>
+            <option value="dark">Dark</option>
+            <option value="brick">Brick</option>
+            <option value="bstabs">Bootstrap Tabs</option>
+            <option value="bspills">Bootstrap Pills</option>
+            <option value="">No Theme</option>
+      </select>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" id="is_vertical2" value="1" />
+      <label for="is_vertical2">Vertical</label>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" id="is_justified2" value="1" checked />
+      <label for="is_justified2">Justified</label>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <label>Animation:</label>
+      <select id="animation2">
+            <option value="none">None</option>
+            <option value="fade">Fade</option>
+            <option value="slide-horizontal">Slide Horizontal</option>
+            <option value="slide-vertical">Slide Vertical</option>
+            <option value="slide-swing">Slide Swing</option>
+      </select>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <label>Go To:</label>
+      <select id="got_to_tab2">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+      </select>
+    </p>
+    <br />
+
+    <!-- SmartTab html -->
+    <div id="smarttab2">
+
+        <ul class="nav">
+            <li>
+              <a class="nav-link" href="#tab2-1">
+                <strong>Tab 1</strong> This is tab description
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="#tab2-2">
+                <strong>Tab 2</strong> This is tab description
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="#tab2-3">
+                <strong>Tab 3</strong> This is tab description
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="#tab2-4">
+                <strong>Tab 4</strong> This is tab description
+              </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="tab2-1" class="tab-pane" role="tabpanel">
+                <h3>Tab 1 Content</h3>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+            <div id="tab2-2" class="tab-pane" role="tabpanel">
+                <h3>Tab 2 Content</h3>
+                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </div>
+            </div>
+            <div id="tab2-3" class="tab-pane" role="tabpanel">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+            <div id="tab2-4" class="tab-pane" role="tabpanel">
+                <h3>Tab 4 Content</h3>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+        </div>
+    </div>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+
+    <!-- Include SmartTab JavaScript source -->
+    <script type="text/javascript" src="../dist/js/jquery.smartTab.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            // SmartTab initialize
+            $('#smarttab').smartTab();
+            $('#smarttab2').smartTab();
+
+
+            // Demo Button Events
+            $("#got_to_tab").on("change", function() {
+                // Go to tab
+                var tab_index = $(this).val() - 1;
+                $('#smarttab').smartTab("goToTab", tab_index);
+                return true;
+            });
+
+            $("#is_vertical").on("click", function() {
+                // Change Orientation
+                var options = {
+                  orientation: ($(this).prop("checked") == true) ? 'vertical' : 'horizontal'
+                };
+                $('#smarttab').smartTab("setOptions", options);
+                return true;
+            });
+
+            $("#is_justified").on("click", function() {
+                // Change Justify
+                var options = {
+                  justified: $(this).prop("checked")
+                };
+
+                $('#smarttab').smartTab("setOptions", options);
+                return true;
+            });
+
+            $("#animation").on("change", function() {
+                // Change theme
+                var options = {
+                  transition: {
+                      animation: $(this).val()
+                  },
+                };
+                $('#smarttab').smartTab("setOptions", options);
+                return true;
+            });
+
+            $("#theme_selector").on("change", function() {
+                // Change theme
+                var options = {
+                  theme: $(this).val()
+                };
+                $('#smarttab').smartTab("setOptions", options);
+                return true;
+            });
+
+            // Set selected theme on page refresh
+            $("#theme_selector").change();
+
+            // Demo Button Events 2
+            $("#got_to_tab2").on("change", function() {
+                // Go to tab
+                var tab_index = $(this).val() - 1;
+                $('#smarttab2').smartTab("goToTab", tab_index);
+                return true;
+            });
+
+            $("#is_vertical2").on("click", function() {
+                // Change Orientation
+                var options = {
+                  orientation: ($(this).prop("checked") == true) ? 'vertical' : 'horizontal'
+                };
+                $('#smarttab2').smartTab("setOptions", options);
+                return true;
+            });
+
+            $("#is_justified2").on("click", function() {
+                // Change Justify
+                var options = {
+                  justified: $(this).prop("checked")
+                };
+
+                $('#smarttab2').smartTab("setOptions", options);
+                return true;
+            });
+
+            $("#animation2").on("change", function() {
+                // Change theme
+                var options = {
+                  transition: {
+                      animation: $(this).val()
+                  },
+                };
+                $('#smarttab2').smartTab("setOptions", options);
+                return true;
+            });
+
+            $("#theme_selector2").on("change", function() {
+                // Change theme
+                var options = {
+                  theme: $(this).val()
+                };
+                $('#smarttab2').smartTab("setOptions", options);
+                return true;
+            });
+
+            // Set selected theme on page refresh
+            $("#theme_selector2").change();
+
+        });
+    </script>
+</body>
+</html>

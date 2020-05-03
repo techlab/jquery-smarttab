@@ -1,0 +1,11 @@
+/*!
+ * jQuery SmartTab v3
+ * The flexible jQuery tab control plugin
+ * http://www.techlaboratory.net/jquery-smarttab
+ *
+ * Created by Dipu Raj
+ * http://dipu.me
+ *
+ * Licensed under the terms of MIT License
+ * https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
+ */.st{position:relative}.st *,.st ::after,.st ::before{box-sizing:border-box}.st>.tab-content{position:relative;overflow:hidden}.st>.nav{display:flex;flex-wrap:wrap;list-style:none;padding-left:0;margin-top:0;margin-bottom:0}@media screen and (max-width:640px){.st>.nav{flex-direction:column!important;flex:1 auto}}.st>.nav .nav-link{display:block;padding:.5rem 1rem;text-decoration:none;outline:0!important}.st>.nav .nav-link:active,.st>.nav .nav-link:focus,.st>.nav .nav-link:hover{text-decoration:none;outline:0!important}.st>.nav .nav-link::-moz-focus-inner{border:0!important}.st>.nav .nav-link.disabled{color:#ccc!important;pointer-events:none;cursor:default}.st.st-vertical{display:flex!important;flex-wrap:nowrap}.st.st-vertical>.nav{flex-direction:column!important;flex:1 auto}.st.st-vertical>.nav .nav-link{text-align:left}.st.st-vertical>.nav .nav-link,.st.st-vertical>.nav>li{flex-grow:unset!important}.st.st-vertical>.tab-content{flex:1 100%}.st.st-justified>.nav .nav-link,.st.st-justified>.nav>li{flex-basis:0;flex-grow:1;text-align:center}.st.st-loading{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.st.st-loading::after{content:"";display:block;position:absolute;opacity:1;top:0;left:0;height:100%;width:100%;background:rgba(255,255,255,.7);z-index:2;transition:all .2s ease}.st.st-loading::before{content:'';display:inline-block;position:absolute;top:45%;left:45%;width:1em;height:1em;border:10px solid #f3f3f3;border-top:10px solid #3498db;border-radius:50%;z-index:10;-webkit-animation:spin 1s linear infinite;animation:spin 1s linear infinite}@-webkit-keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.st-theme-bspills>.tab-content>.tab-pane{padding:10px}.st-theme-bspills>.nav .nav-link{height:100%;min-height:100%;color:#222!important;padding:.5rem 1rem;border-radius:.25rem}.st-theme-bspills>.nav .nav-link.active{color:#fff!important;background:#007bff;cursor:pointer}
