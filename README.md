@@ -2,8 +2,7 @@
 #### The flexible jQuery tab control plugin.
 
 [![Build Status](https://travis-ci.org/techlab/jquery-smarttab.svg?branch=master)](https://travis-ci.org/techlab/jquery-smarttab)
-[![npm version](https://badge.fury.io/js/smarttab.svg)](https://badge.fury.io/js/smarttab)
-[![Bower version](https://badge.fury.io/bo/smarttab.svg)](https://badge.fury.io/bo/smarttab)
+[![npm version](https://badge.fury.io/js/jquery-smarttab.svg)](https://badge.fury.io/js/jquery-smarttab)
 [![Latest Stable Version](https://poser.pugx.org/techlab/jquery-smarttab/v/stable)](https://packagist.org/packages/techlab/jquery-smarttab)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/techlab/jquery-smarttab/master/LICENSE)
 [![Donate on Paypal](https://img.shields.io/badge/PayPal-dipuraj-blue.svg)](https://www.paypal.me/dipuraj)
