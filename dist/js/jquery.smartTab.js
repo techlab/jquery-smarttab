@@ -9,7 +9,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /*!
- * jQuery SmartTab v3.0.0
+ * jQuery SmartTab v3.0.1
  * The flexible jQuery tab control plugin
  * http://www.techlaboratory.net/jquery-smarttab
  *
@@ -52,7 +52,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       enabled: false,
       // Enable/Disable Auto navigation
       interval: 3500,
-      // Auto navigate Interval (used only if "autoProgress" is set to true)
+      // Auto navigate Interval (used only if "autoProgress" is enabled)
       stopOnFocus: true // Stop auto navigation on focus and resume on outfocus
 
     },
@@ -85,31 +85,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
       this.current_index = null; // Autoprogress timer id
 
-      this.autoProgressId = null; // Clean the elements
+      this.autoProgressId = null; // Assign options
 
-      this.pages.hide();
-      this.tabs.removeClass('active'); // Call initial method
+      this._initOptions(); // Initial load
 
-      this.init();
-    } // Initial Method
+
+      this._initLoad();
+    } // Initial Load Method
 
 
     _createClass(SmartTab, [{
-      key: "init",
-      value: function init() {
-        // Set the elements
-        this._setElements(); // Assign plugin events
-
-
-        this._setEvents(); // Get the initial tab index
-
+      key: "_initLoad",
+      value: function _initLoad() {
+        // Clean the elements
+        this.pages.hide();
+        this.tabs.removeClass('active'); // Get the initial tab index
 
         var idx = this._getTabIndex(); // Show the initial tab
 
 
         this._showTab(idx);
-      } // PRIVATE FUNCTIONS
+      } // Initialize options
 
+    }, {
+      key: "_initOptions",
+      value: function _initOptions() {
+        // Set the elements
+        this._setElements(); // Assign plugin events
+
+
+        this._setEvents();
+      }
     }, {
       key: "_getFirstDescendant",
       value: function _getFirstDescendant(selector) {
@@ -661,7 +667,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "setOptions",
       value: function setOptions(options) {
         this.options = $.extend(true, {}, this.options, options);
-        this.init();
+
+        this._initOptions();
       }
     }, {
       key: "loader",

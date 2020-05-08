@@ -209,7 +209,7 @@
             });
 
             $("#animation").on("change", function() {
-                // Change theme
+                // Change animation
                 var options = {
                   transition: {
                       animation: $(this).val()
@@ -227,9 +227,6 @@
                 $('#smarttab').smartTab("setOptions", options);
                 return true;
             });
-
-            // Set selected theme on page refresh
-            $("#theme_selector").change();
 
         });
     </script>

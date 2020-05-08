@@ -1,5 +1,5 @@
 /*!
- * jQuery SmartTab v3.0.0
+ * jQuery SmartTab v3.0.1
  * The flexible jQuery tab control plugin
  * http://www.techlaboratory.net/jquery-smarttab
  *
@@ -29,7 +29,7 @@
         },
         autoProgress: { // Auto navigate tabs on interval
             enabled: false, // Enable/Disable Auto navigation
-            interval: 3500, // Auto navigate Interval (used only if "autoProgress" is set to true)
+            interval: 3500, // Auto navigate Interval (used only if "autoProgress" is enabled)
             stopOnFocus: true, // Stop auto navigation on focus and resume on outfocus
         },
         keyboardSettings: {
@@ -58,26 +58,31 @@
           this.current_index  = null;
           // Autoprogress timer id
           this.autoProgressId = null;
+          // Assign options
+          this._initOptions();
+          // Initial load
+          this._initLoad();
+      }
+
+      // Initial Load Method
+      _initLoad() {
           // Clean the elements
           this.pages.hide();
           this.tabs.removeClass('active');
-          // Call initial method
-          this.init();
-      }
 
-      // Initial Method
-      init() {
-          // Set the elements
-          this._setElements();
-          // Assign plugin events
-          this._setEvents();
           // Get the initial tab index
           let idx = this._getTabIndex();
           // Show the initial tab
           this._showTab(idx);
       }
 
-      // PRIVATE FUNCTIONS
+      // Initialize options
+      _initOptions() {
+        // Set the elements
+        this._setElements();
+        // Assign plugin events
+        this._setEvents();
+      }
 
       _getFirstDescendant(selector) {
           // Check for first level element
@@ -565,7 +570,7 @@
 
       setOptions(options) {
           this.options  = $.extend(true, {}, this.options, options);
-          this.init();
+          this._initOptions();
       }
 
       loader(state) {

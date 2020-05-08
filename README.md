@@ -1,4 +1,4 @@
-# jQuery Smart Tab 3
+# jQuery Smart Tab v3
 #### The flexible jQuery tab control plugin.
 
 [![Build Status](https://travis-ci.org/techlab/jquery-smarttab.svg?branch=master)](https://travis-ci.org/techlab/jquery-smarttab)
@@ -15,21 +15,21 @@ Smart Tab is a flexible and heavily customizable **jQuery Tab control plugin**.
 + [StackOverflow Q&A](http://stackoverflow.com/questions/tagged/smart-tab)
 + [GitHub Issues](https://github.com/techlab/jquery-smarttab/issues)
 
-Screenshots
------
-![Smart Tab Screenshot1](http://techlaboratory.net/assets/media/jquery-smart-tab/smarttab-v3-default.png)   
-
-![Smart Tab Screenshot2](http://techlaboratory.net/assets/media/jquery-smart-tab/smarttab-v3-dark.png)   
-
-![Smart Tab Screenshot3](http://techlaboratory.net/assets/media/jquery-smart-tab/smarttab-v3-tabs.png)   
-
-![Smart Tab Screenshot3](http://techlaboratory.net/assets/media/jquery-smart-tab/smarttab-v3-brick.png)
-
 Demos
 -----
   + [Basic Example](http://techlaboratory.net/projects/demo/jquery-smart-tab/v3)
   + [Ajax Contents](http://techlaboratory.net/projects/demo/jquery-smart-tab/v3/ajax)
-  + [Input Validation](http://techlaboratory.net/projects/demo/jquery-smart-tab/v3/multiple)
+  + [Multiple Tabs](http://techlaboratory.net/projects/demo/jquery-smart-tab/v3/multiple)
+
+Screenshots
+-----
+![jQuery Smart Tab default](http://techlaboratory.net/assets/media/jquery-smart-tab/smarttab-v3-default.png)   
+
+![jQuery Smart Tab dark](http://techlaboratory.net/assets/media/jquery-smart-tab/smarttab-v3-dark.png)   
+
+![jQuery Smart Tab tabs](http://techlaboratory.net/assets/media/jquery-smart-tab/smarttab-v3-tabs.png)   
+
+![jQuery Smart Tab brick](http://techlaboratory.net/assets/media/jquery-smart-tab/smarttab-v3-brick.png)
 
 Requirements
 -----
@@ -49,6 +49,26 @@ Installation
 
 ### Download
 #### [Download from GitHub](https://github.com/techlab/jquery-smarttab/archive/master.zip)    
+
+Features
+-----
+
++ Responsive design
++ Standalone CSS
++ Bootstrap compatible
++ Various themes included
++ Customizable CSS
++ Cool transition animations (fade/slide-horizontal/slide-vertical/slide-swing)
++ URL navigation and tab selection
++ Compatible with all jQuery versions (jQuery 1.11.1+, jQuery 2+, jQuery 3.5+)
++ Auto content height adjustment
++ Auto Progress (automatic navigation of tabs)
++ Ajax content loading support
++ Keyboard navigation
++ External anchor support
++ Custom events
++ Supports all modern browsers
++ Easy to implement and minimal HTML required
 
 Usage
 -----
@@ -123,25 +143,6 @@ Initialize the jQuery SmartTab
 That's it!  
 Please see the [documentation](http://techlaboratory.net/jquery-smarttab#documentation) for more details on implementation and usage.  
 
-Features
------
-
-+ Responsive design
-+ Standalone CSS
-+ Various themes included
-+ Customizable CSS
-+ URL navigation and tab selection
-+ Event support
-+ Ajax content loading support
-+ Keyboard navigation
-+ Auto content height adjustment
-+ Compatible with all jQuery versions (jQuery 1.11.1+, jQuery 2+, jQuery 3.5+)
-+ Easy to implement and minimal HTML required
-+ Supports all modern browsers
-+ Auto Progress (automatic navigation of tabs)
-+ Cool transition animations (fade/slide-horizontal/slide-vertical/slide-swing)
-+ External anchor support
-
 License
 ----
 [MIT License](https://github.com/techlab/jquery-smarttab/blob/master/LICENSE)
@@ -152,4 +153,4 @@ If you like the project please support with your contribution.
 
 [Donate on Paypal](https://www.paypal.me/dipuraj)
 
-Thank you :)
+Thank you and Happy Coding!

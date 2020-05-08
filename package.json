@@ -1,11 +1,11 @@
 {
   "name": "jquery-smarttab",
   "title": "jQuery Smart Tab",
-  "version": "v3.0.0",
+  "version": "v3.0.1",
   "description": "The flexible jQuery tab control plugin",
   "author": {
     "name": "Dipu Raj",
-    "email": "hello@techlaboratory.net",
+    "email": "hello.techlab@gmail.com",
     "url": "http://dipu.me"
   },
   "homepage": "http://techlaboratory.net/jquery-smarttab",
@@ -13,7 +13,7 @@
   "contributors": [
     {
       "name": "Dipu Raj",
-      "email": "hello@techlaboratory.net"
+      "email": "hello.techlab@gmail.com"
     }
   ],
   "main": "./dist/js/jquery.smartTab.js",

@@ -205,7 +205,9 @@
 
             // SmartTab initialize
             $('#smarttab').smartTab();
-            $('#smarttab2').smartTab();
+            $('#smarttab2').smartTab({
+              theme: 'dark'
+            });
 
 
             // Demo Button Events
@@ -304,9 +306,6 @@
                 $('#smarttab2').smartTab("setOptions", options);
                 return true;
             });
-
-            // Set selected theme on page refresh
-            $("#theme_selector2").change();
 
         });
     </script>
