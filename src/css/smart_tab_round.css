@@ -133,37 +133,87 @@
   }
 }
 
-/* SmartTab Theme: Dark */
-.st-theme-dark {
-  border: 1px solid #000000;
-  color: rgba(255, 255, 255, 0.95);
-  background: #181c20;
+/* SmartTab Theme: Round */
+.st-theme-round {
+  border: 1px solid #dee2e6;
+  border-top-width: 0;
+  border-radius: 8px;
 }
 
-.st-theme-dark > .tab-content > .tab-pane {
+.st-theme-round > .tab-content > .tab-pane {
   padding: 10px;
 }
 
-.st-theme-dark > .nav {
-  background: #0D0F12;
+.st-theme-round > .nav {
+  background: #ffffff;
+  border-bottom: 1px solid #dee2e6;
+  margin-right: -1px;
+  margin-left: -1px;
 }
 
-.st-theme-dark > .nav .nav-link {
+.st-theme-round > .nav .nav-link {
   position: relative;
   background: transparent;
-  border: transparent;
   height: 100%;
   min-height: 100%;
-  color: #aaaaaa !important;
+  color: #bbbbbb !important;
   padding: 10px;
+  border: 1px solid transparent;
+  border-bottom-width: 0;
+  background: #ffffff;
 }
 
-.st-theme-dark > .nav .nav-link.active {
-  color: rgba(255, 255, 255, 0.95) !important;
-  background: #181c20 !important;
+.st-theme-round > .nav .nav-link.active {
+  color: #495057 !important;
+  border-color: #dee2e6 !important;
   cursor: pointer;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
-.st-theme-dark > .nav .nav-link.disabled {
-  color: #555555 !important;
+.st-theme-round > .nav .nav-link.active::after {
+  content: "";
+  background: #ffffff;
+  height: 1px;
+  position: absolute;
+  width: 100%;
+  left: 0px;
+  bottom: -1px;
+}
+
+.st-theme-round > .nav .nav-link.disabled {
+  color: #eeeeee !important;
+}
+
+.st-theme-round.st-vertical {
+  border-top-width: 1px;
+  border-left-width: 0;
+}
+
+.st-theme-round.st-vertical > .nav {
+  border-right: 1px solid #dee2e6;
+  border-bottom: unset;
+  margin-top: -1px;
+  margin-bottom: -1px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.st-theme-round.st-vertical > .nav .nav-link {
+  border-bottom-width: 1px;
+  border-right-width: 0;
+}
+
+.st-theme-round.st-vertical > .nav .nav-link.active {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: unset;
+}
+
+.st-theme-round.st-vertical > .nav .nav-link.active::after {
+  height: 100%;
+  width: 1px;
+  top: 0px;
+  left: auto;
+  right: -1px;
 }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Include SmartTab CSS -->
-    <link href="../dist/css/smart_tab_all.min.css" rel="stylesheet" type="text/css" />
+    <link href="./css/smart_tab_all.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Demo Page Style - You don't need -->
     <style>
@@ -22,13 +22,15 @@
     <p>
       <label>Theme:</label>
       <select id="theme_selector">
-            <option value="default" selected>Default</option>
-            <option value="classic">Classic</option>
-            <option value="dark">Dark</option>
-            <option value="brick">Brick</option>
-            <option value="bstabs">Bootstrap Tabs</option>
-            <option value="bspills">Bootstrap Pills</option>
-            <option value="">No Theme</option>
+        <option value="default">Default</option>
+        <option value="classic">Classic</option>
+        <option value="dark">Dark</option>
+        <option value="brick">Brick</option>
+        <option value="round">Round</option>
+        <option value="pills" selected>Pills</option>
+        <option value="github">GitHub</option>
+        <option value="sourceforge">Sourceforge</option>
+        <option value="">No Theme</option>
       </select>
 
       &nbsp;&nbsp;&nbsp;&nbsp;
@@ -110,17 +112,19 @@
     <p>
       <label>Theme:</label>
       <select id="theme_selector2">
-            <option value="default" selected>Default</option>
-            <option value="classic">Classic</option>
-            <option value="dark">Dark</option>
-            <option value="brick">Brick</option>
-            <option value="bstabs">Bootstrap Tabs</option>
-            <option value="bspills">Bootstrap Pills</option>
-            <option value="">No Theme</option>
+          <option value="default" selected>Default</option>
+          <option value="classic">Classic</option>
+          <option value="dark">Dark</option>
+          <option value="brick">Brick</option>
+          <option value="round">Round</option>
+          <option value="pills">Pills</option>
+          <option value="github">GitHub</option>
+          <option value="sourceforge">Sourceforge</option>
+          <option value="">No Theme</option>
       </select>
 
       &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" id="is_vertical2" value="1" />
+      <input type="checkbox" id="is_vertical2" value="1" checked />
       <label for="is_vertical2">Vertical</label>
 
       &nbsp;&nbsp;&nbsp;&nbsp;
@@ -176,7 +180,51 @@
 
         <div class="tab-content">
             <div id="tab2-1" class="tab-pane" role="tabpanel">
-                <h3>Tab 1 Content</h3>
+                <h3>Nested tab</h3>
+
+
+                <div id="smarttab3">
+
+                    <ul class="nav">
+                        <li>
+                          <a class="nav-link" href="#tab3-1">
+                            <strong>Tab 1</strong> This is tab description
+                          </a>
+                        </li>
+                        <li>
+                          <a class="nav-link" href="#tab3-2">
+                            <strong>Tab 2</strong> This is tab description
+                          </a>
+                        </li>
+                        <li>
+                          <a class="nav-link" href="#tab3-3">
+                            <strong>Tab 3</strong> This is tab description
+                          </a>
+                        </li>
+                        <li>
+                          <a class="nav-link" href="#tab3-4">
+                            <strong>Tab 4</strong> This is tab description
+                          </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="tab3-1" class="tab-pane" role="tabpanel">
+                            <h3>Tab 1 Content</h3>
+                        </div>
+                        <div id="tab3-2" class="tab-pane" role="tabpanel">
+                            <h3>Tab 2 Content</h3>
+                        </div>
+                        <div id="tab3-3" class="tab-pane" role="tabpanel">
+                            <h3>Tab 3 Content</h3>
+                        </div>
+                        <div id="tab3-4" class="tab-pane" role="tabpanel">
+                            <h3>Tab 4 Content</h3>
+                        </div>
+                    </div>
+                </div>
+
+
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </div>
             <div id="tab2-2" class="tab-pane" role="tabpanel">
@@ -198,16 +246,21 @@
     <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
 
     <!-- Include SmartTab JavaScript source -->
-    <script type="text/javascript" src="../dist/js/jquery.smartTab.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.smartTab.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
 
             // SmartTab initialize
-            $('#smarttab').smartTab();
-            $('#smarttab2').smartTab({
-              theme: 'dark'
+            $('#smarttab').smartTab({
+              theme: 'pills'
             });
+            $('#smarttab2').smartTab({
+              theme: 'round',
+              orientation: 'vertical'
+            });
+
+            $('#smarttab3').smartTab();
 
 
             // Demo Button Events

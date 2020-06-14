@@ -1,5 +1,5 @@
 /*!
- * jQuery SmartTab v3.0.1
+ * jQuery SmartTab v3.1.1
  * The flexible jQuery tab control plugin
  * http://www.techlaboratory.net/jquery-smarttab
  *

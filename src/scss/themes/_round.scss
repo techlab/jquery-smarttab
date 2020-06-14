@@ -1,0 +1,98 @@
+// Colors
+$border-main-color              : #dee2e6;
+$nav-text-color                 : #bbbbbb;
+$nav-background-color           : #ffffff;
+$nav-active-text-color          : #495057;
+$nav-active-background-color    : #dee2e6;
+$nav-disabled-text-color        : #eeeeee;
+
+.st-theme-round {
+  border: 1px solid $border-main-color;
+  border-top-width: 0;
+  border-radius: 8px;
+
+  // Content style
+  & > .tab-content {
+
+    & > .tab-pane {
+      padding: 10px;
+    }
+  }
+
+  // Navigation style
+  & > .nav {
+    background: $nav-background-color;
+    border-bottom: 1px solid $border-main-color;
+    margin-right: -1px;
+    margin-left: -1px;
+
+    .nav-link {
+      position: relative;
+      background: transparent;
+      height: 100%;
+      min-height: 100%;
+      color: $nav-text-color !important;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-bottom-width: 0;
+      background: $nav-background-color;
+
+      &.active {
+        color: $nav-active-text-color !important;
+        border-color: $nav-active-background-color !important;
+        cursor: pointer;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+
+        &::after {
+          content: "";
+          background: $nav-background-color;
+          height: 1px;
+          position: absolute;
+          width: 100%;
+          left: 0px;
+          bottom: -1px;
+        }
+      }
+
+      &.disabled {
+        color: $nav-disabled-text-color !important;
+      }
+    }
+  }
+
+  // Vertical navigation style
+  &.st-vertical {
+    border-top-width: 1px;
+    border-left-width: 0;
+
+    & > .nav {
+      border-right: 1px solid $border-main-color;
+      border-bottom: unset;
+      margin-top: -1px;
+      margin-bottom: -1px;
+      margin-right: 0;
+      margin-left: 0;
+
+      .nav-link {
+        border-bottom-width: 1px;
+        border-right-width: 0;
+
+        &.active {
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+          border-top-right-radius: unset;
+
+          &::after {
+            height: 100%;
+            width: 1px;
+            top: 0px;
+            left: auto;
+            right: -1px;
+          }
+        }
+      }
+    }
+  }
+
+}

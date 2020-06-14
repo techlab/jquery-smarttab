@@ -133,37 +133,27 @@
   }
 }
 
-/* SmartTab Theme: Dark */
-.st-theme-dark {
-  border: 1px solid #000000;
-  color: rgba(255, 255, 255, 0.95);
-  background: #181c20;
-}
-
-.st-theme-dark > .tab-content > .tab-pane {
+/* SmartTab Theme: Pills */
+.st-theme-pills > .tab-content > .tab-pane {
   padding: 10px;
 }
 
-.st-theme-dark > .nav {
-  background: #0D0F12;
+.st-theme-pills > .nav {
+  background: #5bc0de;
+  padding: 11px 23px;
+  border-radius: 0.1875rem;
 }
 
-.st-theme-dark > .nav .nav-link {
-  position: relative;
-  background: transparent;
-  border: transparent;
+.st-theme-pills > .nav .nav-link {
   height: 100%;
   min-height: 100%;
-  color: #aaaaaa !important;
-  padding: 10px;
+  color: #fff !important;
+  padding: .5rem 1rem;
 }
 
-.st-theme-dark > .nav .nav-link.active {
-  color: rgba(255, 255, 255, 0.95) !important;
-  background: #181c20 !important;
+.st-theme-pills > .nav .nav-link.active {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
   cursor: pointer;
-}
-
-.st-theme-dark > .nav .nav-link.disabled {
-  color: #555555 !important;
 }

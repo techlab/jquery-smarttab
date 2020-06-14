@@ -118,8 +118,8 @@
     position: absolute;
     top: 45%;
     left: 45%;
-    width: 1em;
-    height: 1em;
+    width: 2rem;
+    height: 2rem;
     border: 10px solid #f3f3f3;
     border-top: 10px solid #3498db;
     border-radius: 50%;
@@ -319,25 +319,25 @@
     border-top-right-radius: unset;
 }
 
-/* SmartTab Theme: BsTabs */
-.st-theme-bstabs {
+/* SmartTab Theme: Round */
+.st-theme-round {
     border: 1px solid #dee2e6;
     border-top-width: 0;
     border-radius: 8px;
 }
 
-.st-theme-bstabs > .tab-content > .tab-pane {
+.st-theme-round > .tab-content > .tab-pane {
     padding: 10px;
 }
 
-.st-theme-bstabs > .nav {
+.st-theme-round > .nav {
     background: #ffffff;
     border-bottom: 1px solid #dee2e6;
     margin-right: -1px;
     margin-left: -1px;
 }
 
-.st-theme-bstabs > .nav .nav-link {
+.st-theme-round > .nav .nav-link {
     position: relative;
     background: transparent;
     height: 100%;
@@ -349,7 +349,7 @@
     background: #ffffff;
 }
 
-.st-theme-bstabs > .nav .nav-link.active {
+.st-theme-round > .nav .nav-link.active {
     color: #495057 !important;
     border-color: #dee2e6 !important;
     cursor: pointer;
@@ -357,7 +357,7 @@
     border-top-right-radius: 8px;
 }
 
-.st-theme-bstabs > .nav .nav-link.active::after {
+.st-theme-round > .nav .nav-link.active::after {
     content: "";
     background: #ffffff;
     height: 1px;
@@ -367,16 +367,16 @@
     bottom: -1px;
 }
 
-.st-theme-bstabs > .nav .nav-link.disabled {
+.st-theme-round > .nav .nav-link.disabled {
     color: #eeeeee !important;
 }
 
-.st-theme-bstabs.st-vertical {
+.st-theme-round.st-vertical {
     border-top-width: 1px;
     border-left-width: 0;
 }
 
-.st-theme-bstabs.st-vertical > .nav {
+.st-theme-round.st-vertical > .nav {
     border-right: 1px solid #dee2e6;
     border-bottom: unset;
     margin-top: -1px;
@@ -385,18 +385,18 @@
     margin-left: 0;
 }
 
-.st-theme-bstabs.st-vertical > .nav .nav-link {
+.st-theme-round.st-vertical > .nav .nav-link {
     border-bottom-width: 1px;
     border-right-width: 0;
 }
 
-.st-theme-bstabs.st-vertical > .nav .nav-link.active {
+.st-theme-round.st-vertical > .nav .nav-link.active {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     border-top-right-radius: unset;
 }
 
-.st-theme-bstabs.st-vertical > .nav .nav-link.active::after {
+.st-theme-round.st-vertical > .nav .nav-link.active::after {
     height: 100%;
     width: 1px;
     top: 0px;
@@ -404,21 +404,161 @@
     right: -1px;
 }
 
-/* SmartTab Theme: BsPills */
-.st-theme-bspills > .tab-content > .tab-pane {
+/* SmartTab Theme: Pills */
+.st-theme-pills > .tab-content > .tab-pane {
     padding: 10px;
 }
 
-.st-theme-bspills > .nav .nav-link {
-    height: 100%;
-    min-height: 100%;
-    color: #222 !important;
-    padding: .5rem 1rem;
-    border-radius: .25rem;
+.st-theme-pills > .nav {
+    background: #5bc0de;
+    padding: 11px 23px;
+    border-radius: 0.1875rem;
 }
 
-.st-theme-bspills > .nav .nav-link.active {
+.st-theme-pills > .nav .nav-link {
+    height: 100%;
+    min-height: 100%;
     color: #fff !important;
-    background: #007bff;
+    padding: .5rem 1rem;
+}
+
+.st-theme-pills > .nav .nav-link.active {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
     cursor: pointer;
+}
+
+/* SmartTab Theme: GitHub */
+.st-theme-github > .tab-content > .tab-pane {
+    padding: 10px;
+}
+
+.st-theme-github > .nav {
+    background: #fafbfc;
+    border-bottom: 1px solid #e1e4e8;
+    margin-right: -1px;
+    margin-left: -1px;
+}
+
+.st-theme-github > .nav .nav-link {
+    position: relative;
+    background: transparent;
+    height: 100%;
+    min-height: 100%;
+    color: #586069;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-top-width: 3px;
+    border-bottom-width: 0;
+    background: #fafbfc;
+}
+
+.st-theme-github > .nav .nav-link:hover, .st-theme-github > .nav .nav-link:focus {
+    color: #24292e;
+}
+
+.st-theme-github > .nav .nav-link.active {
+    color: #495057 !important;
+    border-color: #e1e4e8 !important;
+    border-top-color: #e36209 !important;
+    background-color: #ffffff !important;
+    cursor: pointer;
+}
+
+.st-theme-github > .nav .nav-link.active::after {
+    content: "";
+    background: #ffffff;
+    height: 1px;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: -1px;
+}
+
+.st-theme-github > .nav .nav-link.disabled {
+    color: #eeeeee !important;
+}
+
+.st-theme-github.st-vertical > .nav {
+    border-right: 1px solid #e1e4e8;
+    border-bottom: unset;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.st-theme-github.st-vertical > .nav .nav-link {
+    border-bottom-width: 1px;
+    border-right-width: 0;
+    border-top-width: 1px;
+    border-left-width: 3px;
+}
+
+.st-theme-github.st-vertical > .nav .nav-link.active {
+    border-top-color: #e1e4e8 !important;
+    border-left-color: #e36209 !important;
+}
+
+.st-theme-github.st-vertical > .nav .nav-link.active::after {
+    height: 100%;
+    width: 1px;
+    top: 0px;
+    left: auto;
+    right: -1px;
+}
+
+/* SmartTab Theme: Sourceforge */
+.st-theme-sourceforge > .tab-content > .tab-pane {
+    padding: 11px 15px;
+}
+
+.st-theme-sourceforge > .nav {
+    background: #fff;
+    border-right: 1px solid;
+    border-image-source: linear-gradient(to bottom, #333333 0%, #333333 3px, #dcdcdc 3px);
+    border-image-slice: 0 1 0 0;
+}
+
+.st-theme-sourceforge > .nav .nav-link {
+    position: relative;
+    height: 100%;
+    min-height: 100%;
+    padding: 10px;
+    color: #586069;
+    background: #fff;
+    border-style: solid;
+    border-width: 3px 0 1px 1px;
+    border-image-source: linear-gradient(to bottom, #333333 0%, #333333 3px, #dcdcdc 3px);
+    border-image-slice: 3 0 1 1;
+}
+
+.st-theme-sourceforge > .nav .nav-link:hover, .st-theme-sourceforge > .nav .nav-link:focus {
+    color: #09c !important;
+}
+
+.st-theme-sourceforge > .nav .nav-link.active {
+    color: #0cf !important;
+    background-color: #ffffff !important;
+    cursor: pointer;
+    border-image-source: linear-gradient(to bottom, #00ccff 0%, #00ccff 3px, #dcdcdc 3px);
+    border-image-slice: 3 0 0 1;
+}
+
+.st-theme-sourceforge.st-vertical > .nav {
+    border-top: 1px solid;
+    border-image-source: linear-gradient(to right, #333333 0%, #333333 3px, #dcdcdc 3px);
+    border-image-slice: 1 0 0 0;
+}
+
+.st-theme-sourceforge.st-vertical > .nav .nav-link {
+    border-width: 0 1px 1px 3px;
+    border-image-source: linear-gradient(to right, #333333 0%, #333333 3px, #dcdcdc 3px);
+    border-image-slice: 0 1 1 3;
+}
+
+.st-theme-sourceforge.st-vertical > .nav .nav-link.active {
+    border-image-source: linear-gradient(to right, #00ccff 0%, #00ccff 3px, #dcdcdc 3px);
+    border-image-slice: 0 0 1 3;
 }

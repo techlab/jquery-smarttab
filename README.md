@@ -1,5 +1,5 @@
 # jQuery Smart Tab v3
-#### The flexible jQuery tab control plugin.
+#### The flexible jQuery tab control plugin
 
 [![Build Status](https://travis-ci.org/techlab/jquery-smarttab.svg?branch=master)](https://travis-ci.org/techlab/jquery-smarttab)
 [![npm version](https://badge.fury.io/js/jquery-smarttab.svg)](https://badge.fury.io/js/jquery-smarttab)
@@ -8,6 +8,8 @@
 [![Donate on Paypal](https://img.shields.io/badge/PayPal-dipuraj-blue.svg)](https://www.paypal.me/dipuraj)
 
 Smart Tab is a flexible and heavily customizable **jQuery Tab control plugin**.
+
+> If you think it is cool, you should also check it's sibling [React Smart Tab](http://techlaboratory.net/react-smarttab)
 
 + [Homepage](http://techlaboratory.net/jquery-smarttab)
 + [Documentation](http://techlaboratory.net/jquery-smarttab#documentation)
@@ -46,6 +48,24 @@ Installation
 
 ### [Composer](https://packagist.org/packages/techlab/jquery-smarttab)
     composer require techlab/jquery-smarttab
+
+### [CDN - jsDelivr](https://www.jsdelivr.com/package/npm/jquery-smarttab)
+```html
+<!-- CSS -->
+<link href="https://cdn.jsdelivr.net/npm/jquery-smarttab@3.1.1/dist/css/smart_tab_all.min.css" rel="stylesheet" type="text/css" />
+
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-smarttab@3.1.1/dist/js/jquery.smartTab.min.js" type="text/javascript"></script>
+```
+
+### [CDN - UNPKG](https://unpkg.com/browse/jquery-smarttab/)
+```html
+<!-- CSS -->
+<link href="https://unpkg.com/jquery-smarttab@3.1.1/dist/css/smart_tab_all.min.css" rel="stylesheet" type="text/css" />
+
+<!-- JavaScript -->
+<script src="https://unpkg.com/jquery-smarttab@3.1.1/dist/js/jquery.smartTab.min.js" type="text/javascript"></script>
+```
 
 ### Download
 #### [Download from GitHub](https://github.com/techlab/jquery-smarttab/archive/master.zip)    
@@ -140,7 +160,8 @@ Initialize the jQuery SmartTab
   });
 </script>
 ```
-That's it!  
+That's it!   
+ 
 Please see the [documentation](http://techlaboratory.net/jquery-smarttab#documentation) for more details on implementation and usage.  
 
 ##### All options

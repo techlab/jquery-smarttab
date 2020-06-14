@@ -1,0 +1,75 @@
+// Colors
+$border-main-color              : #e1e4e8;
+$nav-text-color                 : #586069;
+$nav-text-hover-color           : #09c;
+$nav-background-color           : #fff;
+$nav-active-text-color          : #0cf;
+$nav-active-background-color    : #ffffff;
+$nav-active-top-border-color    : #0cf;
+$nav-disabled-text-color        : #eeeeee;
+
+.st-theme-sourceforge {
+
+  // Content style
+  & > .tab-content {
+
+    & > .tab-pane {
+      padding: 11px 15px;
+    }
+  }
+
+  // Navigation style
+  & > .nav {
+    background: $nav-background-color;
+    border-right: 1px solid;
+    border-image-source: linear-gradient(to bottom, #333333 0%,#333333 3px,#dcdcdc 3px);
+    border-image-slice: 0 1 0 0;
+
+    .nav-link {
+      position: relative;
+      height: 100%;
+      min-height: 100%;
+      padding: 10px;
+      color: $nav-text-color;
+      background: $nav-background-color;
+      border-style: solid;
+      border-width: 3px 0 1px 1px;
+      border-image-source: linear-gradient(to bottom, #333333 0%,#333333 3px,#dcdcdc 3px);
+      border-image-slice: 3 0 1 1;
+
+      &:hover, &:focus {
+        color: $nav-text-hover-color !important;
+      }
+
+      &.active {
+        color: $nav-active-text-color !important;
+        background-color: $nav-active-background-color !important;
+        cursor: pointer;
+        border-image-source: linear-gradient(to bottom, #00ccff 0%,#00ccff 3px,#dcdcdc 3px);
+        border-image-slice: 3 0 0 1;
+      }
+    }
+  }
+
+  // Vertical navigation style
+  &.st-vertical {
+
+    & > .nav {
+      border-top: 1px solid;
+      border-image-source: linear-gradient(to right, #333333 0%,#333333 3px,#dcdcdc 3px);
+      border-image-slice: 1 0 0 0;
+
+      .nav-link {
+        border-width: 0 1px 1px 3px;
+        border-image-source: linear-gradient(to right, #333333 0%,#333333 3px,#dcdcdc 3px);
+        border-image-slice: 0 1 1 3;
+
+        &.active {
+          border-image-source: linear-gradient(to right, #00ccff 0%,#00ccff 3px,#dcdcdc 3px);
+          border-image-slice: 0 0 1 3;
+        }
+      }
+    }
+  }
+
+}

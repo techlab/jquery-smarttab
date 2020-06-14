@@ -13,6 +13,8 @@ var gulp          = require('gulp'),
 
 sass.compiler     = require('node-sass');
 var Server        = require('karma').Server;
+var browserSync   = require('browser-sync').create();
+var reload        = browserSync.reload;
 
 // Source files
 var SRC_JS        = 'src/js/*.js';
@@ -114,7 +116,24 @@ function watch_all(cb) {
   cb();
 }
 
+// SERVE
+const serve = gulp.parallel(serve_all);
 
+function serve_all(cb) {
+  // Serve files from the root of this project
+  browserSync.init({
+      server: {
+          baseDir: ["examples", "dist"],
+          index: "index.html"
+      }
+  });
+
+  gulp.watch(SRC_JS, build_js).on("change", reload);
+  gulp.watch(SRC_CSS, build_css).on("change", reload);
+  gulp.watch(SRC_SCSS, build_scss).on("change", reload);
+
+  cb();
+}
 
 // TEST
 function test(cb) {
@@ -133,4 +152,5 @@ exports.build   = build;
 exports.lint    = lint;
 exports.watch   = watch;
 exports.test    = test;
-exports.default = exports.build;
+exports.serve   = serve;
+exports.default = exports.serve;

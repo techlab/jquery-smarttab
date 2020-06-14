@@ -148,37 +148,82 @@
     }
 }
 
-/* SmartTab Theme: Dark */
-.st-theme-dark {
-    border: 1px solid #000000;
-    color: rgba(255, 255, 255, 0.95);
-    background: #181c20;
-}
-
-.st-theme-dark > .tab-content > .tab-pane {
+/* SmartTab Theme: GitHub */
+.st-theme-github > .tab-content > .tab-pane {
     padding: 10px;
 }
 
-.st-theme-dark > .nav {
-    background: #0D0F12;
+.st-theme-github > .nav {
+    background: #fafbfc;
+    border-bottom: 1px solid #e1e4e8;
+    margin-right: -1px;
+    margin-left: -1px;
 }
 
-.st-theme-dark > .nav .nav-link {
+.st-theme-github > .nav .nav-link {
     position: relative;
     background: transparent;
-    border: transparent;
     height: 100%;
     min-height: 100%;
-    color: #aaaaaa !important;
+    color: #586069;
     padding: 10px;
+    border: 1px solid transparent;
+    border-top-width: 3px;
+    border-bottom-width: 0;
+    background: #fafbfc;
 }
 
-.st-theme-dark > .nav .nav-link.active {
-    color: rgba(255, 255, 255, 0.95) !important;
-    background: #181c20 !important;
+.st-theme-github > .nav .nav-link:hover, .st-theme-github > .nav .nav-link:focus {
+    color: #24292e;
+}
+
+.st-theme-github > .nav .nav-link.active {
+    color: #495057 !important;
+    border-color: #e1e4e8 !important;
+    border-top-color: #e36209 !important;
+    background-color: #ffffff !important;
     cursor: pointer;
 }
 
-.st-theme-dark > .nav .nav-link.disabled {
-    color: #555555 !important;
+.st-theme-github > .nav .nav-link.active::after {
+    content: "";
+    background: #ffffff;
+    height: 1px;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: -1px;
+}
+
+.st-theme-github > .nav .nav-link.disabled {
+    color: #eeeeee !important;
+}
+
+.st-theme-github.st-vertical > .nav {
+    border-right: 1px solid #e1e4e8;
+    border-bottom: unset;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.st-theme-github.st-vertical > .nav .nav-link {
+    border-bottom-width: 1px;
+    border-right-width: 0;
+    border-top-width: 1px;
+    border-left-width: 3px;
+}
+
+.st-theme-github.st-vertical > .nav .nav-link.active {
+    border-top-color: #e1e4e8 !important;
+    border-left-color: #e36209 !important;
+}
+
+.st-theme-github.st-vertical > .nav .nav-link.active::after {
+    height: 100%;
+    width: 1px;
+    top: 0px;
+    left: auto;
+    right: -1px;
 }

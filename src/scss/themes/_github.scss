@@ -1,15 +1,14 @@
 // Colors
-$border-main-color              : #dee2e6;
-$nav-text-color                 : #bbbbbb;
-$nav-background-color           : #ffffff;
+$border-main-color              : #e1e4e8;
+$nav-text-color                 : #586069;
+$nav-text-hover-color           : #24292e;
+$nav-background-color           : #fafbfc;
 $nav-active-text-color          : #495057;
-$nav-active-background-color    : #dee2e6;
+$nav-active-background-color    : #ffffff;
+$nav-active-top-border-color    : #e36209;
 $nav-disabled-text-color        : #eeeeee;
 
-.st-theme-bstabs {
-  border: 1px solid $border-main-color;
-  border-top-width: 0;
-  border-radius: 8px;
+.st-theme-github {
 
   // Content style
   & > .tab-content {
@@ -31,22 +30,27 @@ $nav-disabled-text-color        : #eeeeee;
       background: transparent;
       height: 100%;
       min-height: 100%;
-      color: $nav-text-color !important;
+      color: $nav-text-color;
       padding: 10px;
       border: 1px solid transparent;
+      border-top-width: 3px;
       border-bottom-width: 0;
       background: $nav-background-color;
 
+      &:hover, &:focus {
+        color: $nav-text-hover-color;
+      }
+
       &.active {
         color: $nav-active-text-color !important;
-        border-color: $nav-active-background-color !important;
+        border-color: $border-main-color !important;
+        border-top-color: $nav-active-top-border-color !important;
+        background-color: $nav-active-background-color !important;
         cursor: pointer;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
 
         &::after {
           content: "";
-          background: $nav-background-color;
+          background: $nav-active-background-color;
           height: 1px;
           position: absolute;
           width: 100%;
@@ -63,8 +67,6 @@ $nav-disabled-text-color        : #eeeeee;
 
   // Vertical navigation style
   &.st-vertical {
-    border-top-width: 1px;
-    border-left-width: 0;
 
     & > .nav {
       border-right: 1px solid $border-main-color;
@@ -77,11 +79,12 @@ $nav-disabled-text-color        : #eeeeee;
       .nav-link {
         border-bottom-width: 1px;
         border-right-width: 0;
+        border-top-width: 1px;
+        border-left-width: 3px;
 
         &.active {
-          border-top-left-radius: 8px;
-          border-bottom-left-radius: 8px;
-          border-top-right-radius: unset;
+          border-top-color: $border-main-color !important;
+          border-left-color: $nav-active-top-border-color !important;
 
           &::after {
             height: 100%;
