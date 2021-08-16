@@ -286,7 +286,7 @@
               // Fix height with content
               this._fixHeight(idx);
               // Trigger "showTab" event
-              this._triggerEvent("showTab", [selTab, this.current_index]);
+              this._triggerEvent("showTab", [selTab, idx]);
               // Restart auto progress if enabled
               this._restartAutoProgress();
           });
