@@ -1,40 +1,34 @@
 /*!
- * jQuery SmartTab v3
- * The flexible jQuery tab control plugin
- * http://www.techlaboratory.net/jquery-smarttab
- *
- * Created by Dipu Raj
- * http://dipu.me
- *
- * Licensed under the terms of MIT License
- * https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
- */
+* jQuery SmartTab v4.x
+* The flexible tab control plugin for jQuery
+* http://www.techlaboratory.net/jquery-smarttab
+*
+* Created by Dipu Raj (http://dipu.me)
+*
+* Licensed under the terms of the MIT License
+* https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
+*/
 
 @charset 'utf-8';
 
-/* SmartTab Base Styles */
-@import 'core/_base';
+/* Variables */
+@import 'core/variables';
 
-/* SmartTab Theme: Default */
-@import 'themes/_default';
+/* Root */
+@import 'core/root';
 
-/* SmartTab Theme: Classic */
-@import 'themes/_classic';
+/* Base Styles */
+@import 'core/base';
 
-/* SmartTab Theme: Dark */
-@import 'themes/_dark';
+/* Theme Styles */
+@import 'themes/basic';
 
-/* SmartTab Theme: Brick */
-@import 'themes/_brick';
+@import 'themes/elite';
 
-/* SmartTab Theme: Round */
-@import 'themes/_round';
+@import 'themes/pills';
 
-/* SmartTab Theme: Pills */
-@import 'themes/_pills';
+@import 'themes/brick';
 
-/* SmartTab Theme: GitHub */
-@import 'themes/_github';
+@import 'themes/forge';
 
-/* SmartTab Theme: Sourceforge */
-@import 'themes/_sourceforge';
+@import 'themes/blocks';

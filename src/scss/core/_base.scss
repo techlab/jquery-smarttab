@@ -1,19 +1,23 @@
-$breakpoint-phone: 640px;
-
+// Core classes
 .st {
     position: relative;
 
     *,
     *::before,
     *::after {
-      box-sizing: border-box; // 1
+      box-sizing: border-box;
     }
 
     & > .tab-content {
       position: relative;
       overflow: hidden;
+      height: auto;
+      & > .tab-pane {
+        padding: .8rem;
+      }
     }
 
+    // Navigation style
     & > .nav {
       display: flex;
       flex-wrap: wrap;
@@ -28,26 +32,31 @@ $breakpoint-phone: 640px;
       }
 
       .nav-link {
+        position: relative;
         display: block;
         padding: .5rem 1rem;
+        height: 100%;
+        min-height: 100%;
         text-decoration: none;
-        outline: 0!important;;
 
         &:hover,
         &:active,
         &:focus {
           text-decoration: none;
-          outline:0 !important;
         }
 
         &::-moz-focus-inner {
-          border: 0!important;;
+          border: 0;
         }
 
         &.disabled {
-          color: #ccc !important;
           pointer-events: none;
-          cursor: default;
+          cursor: not-allowed;
+        }
+
+        &.hidden {
+          display: none;
+          visibility: none;
         }
       }
     }
@@ -77,9 +86,7 @@ $breakpoint-phone: 640px;
 
     // Justified navigation style
     &.st-justified {
-
       & > .nav {
-
         & > li, .nav-link {
           flex-basis: 0;
           flex-grow: 1;
@@ -101,9 +108,8 @@ $breakpoint-phone: 640px;
         left: 0;
         height: 100%;
         width: 100%;
-        background: rgba(255,255,255,.7);
+        background: var(--#{$var-prefix}loader-background-wrapper-color);
         z-index: 2;
-        transition: all .2s ease;
       }
 
       &::before {
@@ -114,8 +120,8 @@ $breakpoint-phone: 640px;
         left: 45%;
         width: 2rem;
         height: 2rem;
-        border: 10px solid #f3f3f3;
-        border-top: 10px solid #3498db;
+        border: 10px solid var(--#{$var-prefix}loader-color);
+        border-top: 10px solid var(--#{$var-prefix}loader-background-color);
         border-radius: 50%;
         z-index: 10;
         animation: spin 1s linear infinite;
@@ -126,5 +132,4 @@ $breakpoint-phone: 640px;
         100% { transform: rotate(360deg); }
       }
     }
-
  }

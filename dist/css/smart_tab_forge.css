@@ -172,26 +172,61 @@
 }
 
 /* Theme Styles */
-.st-theme-pills > .nav {
-    position: relative;
-    background: var(--st-anchor-default-primary-color);
-    padding: 0.3em !important;
-    border-radius: 2em;
+.st-theme-forge > .nav {
+    border-right: 1px solid var(--st-anchor-default-secondary-color);
 }
 
-.st-theme-pills > .nav .nav-link {
+.st-theme-forge > .nav .nav-link {
+    position: relative;
     height: 100%;
     min-height: 100%;
-    color: var(--st-anchor-default-secondary-color) !important;
-    border-radius: 2em;
+    padding: 10px;
+    color: var(--st-anchor-default-primary-color);
+    border-style: solid;
+    border-width: 3px 0 1px 1px;
+    border-color: var(--st-anchor-default-secondary-color);
 }
 
-.st-theme-pills > .nav .nav-link.active {
-    color: var(--st-anchor-active-secondary-color) !important;
-    background: var(--st-anchor-active-primary-color);
-    box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.1);
+.st-theme-forge > .nav .nav-link:hover, .st-theme-forge > .nav .nav-link:focus {
+    color: var(--st-anchor-active-primary-color) !important;
 }
 
-.st-theme-pills > .nav .nav-link.disabled {
-    color: var(--st-anchor-disabled-secondary-color) !important;
+.st-theme-forge > .nav .nav-link.active {
+    color: var(--st-anchor-active-primary-color) !important;
+    border-top-color: var(--st-anchor-active-primary-color);
+}
+
+.st-theme-forge > .nav .nav-link.active::after {
+    content: "";
+    position: absolute;
+    background: #ffffff;
+    height: 1px;
+    width: 100%;
+    left: 0px;
+    bottom: -1px;
+}
+
+.st-theme-forge > .nav .nav-link.disabled {
+    color: var(--st-anchor-disabled-primary-color) !important;
+}
+
+.st-theme-forge.st-vertical > .nav {
+    border-top: 1px solid var(--st-anchor-default-secondary-color);
+    border-right: unset;
+}
+
+.st-theme-forge.st-vertical > .nav .nav-link {
+    border-width: 0 1px 1px 3px;
+}
+
+.st-theme-forge.st-vertical > .nav .nav-link.active {
+    border-left-color: var(--st-anchor-active-primary-color);
+}
+
+.st-theme-forge.st-vertical > .nav .nav-link.active::after {
+    height: 100%;
+    width: 1px;
+    top: 0px;
+    left: auto;
+    right: -1px;
 }

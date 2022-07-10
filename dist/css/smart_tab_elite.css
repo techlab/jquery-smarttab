@@ -172,26 +172,78 @@
 }
 
 /* Theme Styles */
-.st-theme-pills > .nav {
-    position: relative;
-    background: var(--st-anchor-default-primary-color);
-    padding: 0.3em !important;
-    border-radius: 2em;
+.st-theme-elite {
+    border-left: 1px solid var(--st-anchor-active-primary-color);
+    border-right: 1px solid var(--st-anchor-active-primary-color);
+    border-bottom: 1px solid var(--st-anchor-active-primary-color);
+    border-radius: 0.5em;
 }
 
-.st-theme-pills > .nav .nav-link {
+.st-theme-elite > .nav {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--st-anchor-active-primary-color);
+    margin-right: -1px;
+    margin-left: -1px;
+}
+
+.st-theme-elite > .nav .nav-link {
+    border: 1px solid transparent;
+    border-bottom-width: 0;
+    color: var(--st-anchor-default-primary-color);
+}
+
+.st-theme-elite > .nav .nav-link.active {
+    color: var(--st-anchor-active-primary-color) !important;
+    border-color: var(--st-anchor-active-primary-color) !important;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+}
+
+.st-theme-elite > .nav .nav-link.active::after {
+    content: "";
+    position: absolute;
+    background: #ffffff;
+    height: 1px;
+    width: 100%;
+    left: 0px;
+    bottom: -1px;
+}
+
+.st-theme-elite > .nav .nav-link.disabled {
+    color: var(--st-anchor-disabled-primary-color) !important;
+}
+
+.st-theme-elite.st-vertical {
+    border-left: unset;
+    border-top: 1px solid var(--st-anchor-active-primary-color);
+    border-right: 1px solid var(--st-anchor-active-primary-color);
+    border-bottom: 1px solid var(--st-anchor-active-primary-color);
+}
+
+.st-theme-elite.st-vertical > .nav {
+    border-right: 1px solid var(--st-anchor-active-primary-color);
+    border-bottom: unset;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.st-theme-elite.st-vertical > .nav .nav-link {
+    border-bottom-width: 1px;
+    border-right-width: 0;
+}
+
+.st-theme-elite.st-vertical > .nav .nav-link.active {
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+    border-top-right-radius: unset;
+}
+
+.st-theme-elite.st-vertical > .nav .nav-link.active::after {
     height: 100%;
-    min-height: 100%;
-    color: var(--st-anchor-default-secondary-color) !important;
-    border-radius: 2em;
-}
-
-.st-theme-pills > .nav .nav-link.active {
-    color: var(--st-anchor-active-secondary-color) !important;
-    background: var(--st-anchor-active-primary-color);
-    box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.1);
-}
-
-.st-theme-pills > .nav .nav-link.disabled {
-    color: var(--st-anchor-disabled-secondary-color) !important;
+    width: 1px;
+    top: 0px;
+    left: auto;
+    right: -1px;
 }

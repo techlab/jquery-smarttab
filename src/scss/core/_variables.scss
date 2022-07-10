@@ -1,0 +1,25 @@
+// Prefix for :root CSS variables
+$var-prefix:                        st- !default;
+// Basic settings
+$breakpoint-phone:                  640px;
+
+$colors: (
+  // Background
+  "background":                     unset,
+  // Border
+  "border":                         1px solid #eeeeee,
+  // Anchor colors
+  "anchor-default-primary-color":   #60bef5,
+  "anchor-default-secondary-color": #dbe0e5,
+
+  "anchor-active-primary-color":    #009EF7,
+  "anchor-active-secondary-color":  #ffffff,
+  
+  "anchor-disabled-primary-color":  #eeeeee,
+  "anchor-disabled-secondary-color":#dbe0e5,
+  
+  // Loading animation color
+  "loader-color":                   #009EF7,
+  "loader-background-color":        #f8f9fa,
+  "loader-background-wrapper-color":rgba(255,255,255,.7),
+) !default;

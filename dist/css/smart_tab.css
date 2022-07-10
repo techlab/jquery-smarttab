@@ -1,15 +1,30 @@
 /*!
- * jQuery SmartTab v3
- * The flexible jQuery tab control plugin
- * http://www.techlaboratory.net/jquery-smarttab
- *
- * Created by Dipu Raj
- * http://dipu.me
- *
- * Licensed under the terms of MIT License
- * https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
- */
-/* SmartTab Base Styles */
+* jQuery SmartTab v4.x
+* The flexible tab control plugin for jQuery
+* http://www.techlaboratory.net/jquery-smarttab
+*
+* Created by Dipu Raj (http://dipu.me)
+*
+* Licensed under the terms of the MIT License
+* https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
+*/
+/* Variables */
+/* Root */
+:root {
+    --st-background: unset;
+    --st-border: 1px solid #eeeeee;
+    --st-anchor-default-primary-color: #60bef5;
+    --st-anchor-default-secondary-color: #dbe0e5;
+    --st-anchor-active-primary-color: #009EF7;
+    --st-anchor-active-secondary-color: #ffffff;
+    --st-anchor-disabled-primary-color: #eeeeee;
+    --st-anchor-disabled-secondary-color: #dbe0e5;
+    --st-loader-color: #009EF7;
+    --st-loader-background-color: #f8f9fa;
+    --st-loader-background-wrapper-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Base Styles */
 .st {
     position: relative;
 }
@@ -23,6 +38,11 @@
 .st > .tab-content {
     position: relative;
     overflow: hidden;
+    height: auto;
+}
+
+.st > .tab-content > .tab-pane {
+    padding: 0.8rem;
 }
 
 .st > .nav {
@@ -42,25 +62,30 @@
 }
 
 .st > .nav .nav-link {
+    position: relative;
     display: block;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
+    height: 100%;
+    min-height: 100%;
     text-decoration: none;
-    outline: 0 !important;
 }
 
 .st > .nav .nav-link:hover, .st > .nav .nav-link:active, .st > .nav .nav-link:focus {
     text-decoration: none;
-    outline: 0 !important;
 }
 
 .st > .nav .nav-link::-moz-focus-inner {
-    border: 0 !important;
+    border: 0;
 }
 
 .st > .nav .nav-link.disabled {
-    color: #ccc !important;
     pointer-events: none;
-    cursor: default;
+    cursor: not-allowed;
+}
+
+.st > .nav .nav-link.hidden {
+    display: none;
+    visibility: none;
 }
 
 .st.st-vertical {
@@ -94,7 +119,6 @@
 .st.st-loading {
     -webkit-user-select: none;
     -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
@@ -107,21 +131,20 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--st-loader-background-wrapper-color);
     z-index: 2;
-    transition: all .2s ease;
 }
 
 .st.st-loading::before {
-    content: '';
+    content: "";
     display: inline-block;
     position: absolute;
     top: 45%;
     left: 45%;
     width: 2rem;
     height: 2rem;
-    border: 10px solid #f3f3f3;
-    border-top: 10px solid #3498db;
+    border: 10px solid var(--st-loader-color);
+    border-top: 10px solid var(--st-loader-background-color);
     border-radius: 50%;
     z-index: 10;
     -webkit-animation: spin 1s linear infinite;
@@ -148,60 +171,56 @@
     }
 }
 
-/* SmartTab Theme: Default */
-.st-theme-default {
-    border: 1px solid #eee;
+/* Theme Styles */
+.st-theme-basic {
+    border: var(--st-border);
+    background: var(--st-background);
 }
 
-.st-theme-default > .tab-content > .tab-pane {
-    padding: 10px;
+.st-theme-basic > .nav {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
 }
 
-.st-theme-default > .nav {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1) !important;
-}
-
-.st-theme-default > .nav .nav-link {
+.st-theme-basic > .nav .nav-link {
     position: relative;
-    background: transparent;
-    border: transparent;
     height: 100%;
     min-height: 100%;
-    color: #222 !important;
-    padding: 10px;
-    transition: all 250ms ease 0s;
+    color: var(--st-anchor-default-primary-color);
 }
 
-.st-theme-default > .nav .nav-link::after {
+.st-theme-basic > .nav .nav-link::after {
     content: "";
-    background: transparent;
-    height: 2px;
     position: absolute;
-    width: 100%;
+    pointer-events: none;
+    height: 2px;
+    width: 0;
     left: 0px;
     bottom: -1px;
-    transition: all 250ms ease 0s;
-    transform: scale(0);
+    transition: all 0.35s ease 0.15s;
+    width: 100%;
 }
 
-.st-theme-default > .nav .nav-link.active {
-    color: #5bc0de !important;
-    cursor: pointer;
+.st-theme-basic > .nav .nav-link.active {
+    color: var(--st-anchor-active-primary-color) !important;
 }
 
-.st-theme-default > .nav .nav-link.active::after {
-    background: #5bc0de !important;
-    transform: scale(1);
+.st-theme-basic > .nav .nav-link.active::after {
+    background: var(--st-anchor-active-primary-color) !important;
 }
 
-.st-theme-default.st-vertical > .nav {
+.st-theme-basic > .nav .nav-link.disabled {
+    color: var(--st-anchor-disabled-primary-color) !important;
+}
+
+.st-theme-basic.st-vertical > .nav {
     box-shadow: 0.125rem 0 0.25rem rgba(0, 0, 0, 0.1) !important;
 }
 
-.st-theme-default.st-vertical > .nav .nav-link::after {
+.st-theme-basic.st-vertical > .nav .nav-link::after {
     height: 100%;
     width: 2px;
     top: 0px;
-    left: auto;
+    left: unset;
+    bottom: unset;
     right: -1px;
 }

@@ -1,50 +1,81 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 /*!
- * jQuery SmartTab v3.1.1
- * The flexible jQuery tab control plugin
- * http://www.techlaboratory.net/jquery-smarttab
- *
- * Created by Dipu Raj
- * http://dipu.me
- *
- * @license Licensed under the terms of the MIT License
- * https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
- */
-;
+* jQuery SmartTab v4.0.1
+* The flexible tab control plugin for jQuery
+* http://www.techlaboratory.net/jquery-smarttab
+*
+* Created by Dipu Raj (http://dipu.me)
+*
+* Licensed under the terms of the MIT License
+* https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
+*/
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery'], factory);
+  } else if ((typeof module === "undefined" ? "undefined" : _typeof(module)) === 'object' && module.exports) {
+    // Node/CommonJS
+    module.exports = function (root, jQuery) {
+      if (jQuery === undefined) {
+        // require('jQuery') returns a factory that requires window to
+        // build a jQuery instance, we normalize how we use modules
+        // that require this pattern but the window provided is a noop
+        // if it's defined (how jquery works)
+        if (typeof window !== 'undefined') {
+          jQuery = require('jquery');
+        } else {
+          jQuery = require('jquery')(root);
+        }
+      }
 
-(function ($, window, document, undefined) {
+      factory(jQuery);
+      return jQuery;
+    };
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
+})(function ($) {
   "use strict"; // Default options
 
   var defaults = {
     selected: 0,
     // Initial selected tab, 0 = first tab
-    theme: 'default',
-    // theme for the tab, related css need to include for other than default theme
-    orientation: 'horizontal',
-    // Nav menu orientation. horizontal/vertical
+    theme: 'basic',
+    // theme, related css need to include for other than default theme
     justified: true,
     // Nav menu justification. true/false
     autoAdjustHeight: true,
     // Automatically adjust content height
     backButtonSupport: true,
     // Enable the back button support
-    enableURLhash: true,
-    // Enable selection of the tab based on url hash
+    enableUrlHash: true,
+    // Enable selection of the step based on url hash
     transition: {
       animation: 'none',
-      // Effect on navigation, none/fade/slide-horizontal/slide-vertical/slide-swing
+      // Animation effect on navigation, none|fade|slideHorizontal|slideVertical|slideSwing|css(Animation CSS class also need to specify)
       speed: '400',
-      // Transion animation speed
-      easing: '' // Transition animation easing. Not supported without a jQuery easing plugin
+      // Animation speed. Not used if animation is 'css'
+      easing: '',
+      // Animation easing. Not supported without a jQuery easing plugin. Not used if animation is 'css'
+      prefixCss: '',
+      // Only used if animation is 'css'. Animation CSS prefix
+      fwdShowCss: '',
+      // Only used if animation is 'css'. Step show Animation CSS on forward direction
+      fwdHideCss: '',
+      // Only used if animation is 'css'. Step hide Animation CSS on forward direction
+      bckShowCss: '',
+      // Only used if animation is 'css'. Step show Animation CSS on backward direction
+      bckHideCss: '' // Only used if animation is 'css'. Step hide Animation CSS on backward direction
 
     },
     autoProgress: {
@@ -56,18 +87,39 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       stopOnFocus: true // Stop auto navigation on focus and resume on outfocus
 
     },
-    keyboardSettings: {
+    keyboard: {
       keyNavigation: true,
       // Enable/Disable keyboard navigation(left and right keys are used if enabled)
-      keyLeft: [37],
+      keyLeft: [37, 38],
       // Left key code
-      keyRight: [39] // Right key code
+      keyRight: [39, 40],
+      // Right key code
+      keyHome: [36],
+      // Home key code
+      keyEnd: [35] // End key code
 
-    }
+    },
+    style: {
+      // CSS Class settings
+      mainCss: 'st',
+      navCss: 'nav',
+      navLinkCss: 'nav-link',
+      contentCss: 'tab-content',
+      contentPanelCss: 'tab-pane',
+      themePrefixCss: 'st-theme-',
+      justifiedCss: 'st-justified',
+      anchorDefaultCss: 'default',
+      anchorActiveCss: 'active',
+      loaderCss: 'st-loading'
+    },
+    getContent: null // Callback function for content loading
+
   };
 
   var SmartTab = /*#__PURE__*/function () {
     function SmartTab(element, options) {
+      var _this = this;
+
       _classCallCheck(this, SmartTab);
 
       // Merge user settings with default
@@ -75,46 +127,63 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
       this.main = $(element); // Navigation bar element
 
-      this.nav = this._getFirstDescendant('.nav'); // Tab anchor elements
+      this.nav = this._getFirstDescendant('.' + this.options.style.navCss); // Content container
 
-      this.tabs = this.nav.find('.nav-link'); // Content container
+      this.container = this._getFirstDescendant('.' + this.options.style.contentCss); // Tab anchor elements
 
-      this.container = this._getFirstDescendant('.tab-content'); // Content pages
+      this.tabs = this.nav.find('.' + this.options.style.navLinkCss); // Content pages
 
-      this.pages = this.container.children('.tab-pane'); // Active Tab index
+      this.pages = this.container.children('.' + this.options.style.contentPanelCss); // Initial index
 
-      this.current_index = null; // Autoprogress timer id
+      this.current_index = -1; // Autoprogress timer id
 
-      this.autoProgressId = null; // Assign options
+      this.autoProgressId = null; // Is initialiazed
 
-      this._initOptions(); // Initial load
+      this.is_init = false; // Initialize options
+
+      this._init(); // Load asynchronously
 
 
-      this._initLoad();
-    } // Initial Load Method
+      setTimeout(function () {
+        _this._load();
+      }, 0);
+    } // Initialize options
 
 
     _createClass(SmartTab, [{
-      key: "_initLoad",
-      value: function _initLoad() {
-        // Clean the elements
-        this.pages.hide();
-        this.tabs.removeClass('active'); // Get the initial tab index
-
-        var idx = this._getTabIndex(); // Show the initial tab
-
-
-        this._showTab(idx);
-      } // Initialize options
-
-    }, {
-      key: "_initOptions",
-      value: function _initOptions() {
+      key: "_init",
+      value: function _init() {
         // Set the elements
-        this._setElements(); // Assign plugin events
+        this._setElements(); // Skip if already init
 
+
+        if (this.is_init === true) return true; // Assign plugin events
 
         this._setEvents();
+
+        this.is_init = true; // Trigger the initialized event
+
+        this._triggerEvent("initialized");
+      } // Initial Load Method
+
+    }, {
+      key: "_load",
+      value: function _load() {
+        // Clean the elements
+        this.pages.hide(); // Clear other states from the steps
+
+        this.tabs.removeClass(this.options.style.anchorActiveCss); // Initial step index
+
+        this.current_index = -1; // Get the initial step index
+
+        var idx = this._getURLHashIndex();
+
+        idx = idx ? idx : this.options.selected; // Show the initial step
+
+        this._showTab(idx); // Trigger the loaded event
+
+
+        this._triggerEvent("loaded");
       }
     }, {
       key: "_getFirstDescendant",
@@ -148,455 +217,301 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       key: "_setElements",
       value: function _setElements() {
+        var _this2 = this;
+
         // Set the main element
-        this.main.addClass('st');
+        this.main.addClass(this.options.style.mainCss); // Set theme option
 
-        if (this.options.justified === true) {
-          this.main.addClass('st-justified');
-        } else {
-          this.main.removeClass('st-justified');
-        }
+        this.main.removeClass(function (i, className) {
+          return (className.match(new RegExp('(^|\\s)' + _this2.options.style.themePrefixCss + '\\S+', 'g')) || []).join(' ');
+        }).addClass(this.options.style.themePrefixCss + this.options.theme); // Set justify option
 
-        this._setTheme(this.options.theme);
-
-        this._setOrientation(this.options.orientation);
+        this.main.toggleClass(this.options.style.justifiedCss, this.options.justified);
       }
     }, {
       key: "_setEvents",
       value: function _setEvents() {
-        var _this = this;
+        var _this3 = this;
 
-        // Check if event handler already exists
-        if (this.main.data('click-init')) {
-          return true;
-        } // Flag item to prevent attaching handler again
-
-
-        this.main.data('click-init', true); // Anchor click event
-
-        $(this.tabs).on("click", function (e) {
+        // Anchor click event
+        this.tabs.on("click", function (e) {
           e.preventDefault();
+          var elm = $(e.currentTarget);
 
-          _this._showTab(_this.tabs.index(e.currentTarget));
-        }); // Keyboard navigation event
-
-        if (this.options.keyboardSettings.keyNavigation) {
-          $(document).keyup(function (e) {
-            _this._keyNav(e);
-          });
-        } // Back/forward browser button event
-
-
-        if (this.options.backButtonSupport) {
-          $(window).on('hashchange', function (e) {
-            var idx = _this._getURLHashIndex();
-
-            if (idx !== false) {
-              e.preventDefault();
-
-              _this._showTab(idx);
-            }
-          });
-        }
+          if (_this3._isShowable(elm)) {
+            // Get the step index
+            _this3._showTab(_this3.tabs.index(elm));
+          }
+        });
 
         if (this.options.autoProgress.enabled && this.options.autoProgress.stopOnFocus) {
           $(this.main).on("mouseover", function (e) {
             e.preventDefault();
 
-            _this._stopAutoProgress();
+            _this3._stopAutoProgress();
           });
           $(this.main).on("mouseleave", function (e) {
             e.preventDefault();
 
-            _this._startAutoProgress();
+            _this3._startAutoProgress();
           });
+        } // Keyboard navigation event            
+
+
+        $(document).keyup(function (e) {
+          _this3._keyNav(e);
+        }); // Back/forward browser button event
+
+        $(window).on('hashchange', function (e) {
+          if (_this3.options.backButtonSupport !== true) {
+            return;
+          }
+
+          var idx = _this3._getURLHashIndex();
+
+          if (idx && _this3._isShowable(_this3.tabs.eq(idx))) {
+            e.preventDefault();
+
+            _this3._showTab(idx);
+          }
+        }); // Fix content height on window resize
+
+        $(window).on('resize', function (e) {
+          _this3._fixHeight(_this3.current_index);
+        });
+      }
+    }, {
+      key: "_navigate",
+      value: function _navigate(dir) {
+        if (dir == 'first') {
+          this._showTab(this._getShowable(-1, 'next'));
+        } else if (dir == 'last') {
+          this._showTab(this._getShowable(this.tabs.length, 'prev'));
+        } else {
+          this._showTab(this._getShowable(this.current_index, dir));
         }
       }
     }, {
-      key: "_showNext",
-      value: function _showNext() {
-        var si = 0; // Find the next showable step
+      key: "_showTab",
+      value: function _showTab(idx) {
+        var _this4 = this;
 
-        for (var i = this.current_index + 1; i < this.tabs.length; i++) {
-          if (this._isShowable(i)) {
-            si = i;
-            break;
+        if (idx === -1 || idx === null) return false; // If current step is requested again, skip
+
+        if (idx == this.current_index) return false; // If step not found, skip
+
+        if (!this.tabs.eq(idx)) return false; // If it is a disabled step, skip
+
+        if (!this._isEnabled(this.tabs.eq(idx))) return false; // Get the direction of navigation
+
+        var stepDirection = this._getStepDirection(idx);
+
+        if (this.current_index !== -1) {
+          // Trigger "leaveStep" event
+          if (this._triggerEvent("leaveTab", [this._getAnchor(this.current_index), this.current_index, idx, stepDirection]) === false) {
+            return false;
           }
         }
 
-        this._showTab(si);
+        this._loadContent(idx, function () {
+          // Get step to show element
+          var selTab = _this4._getAnchor(idx); // Change the url hash to new step
+
+
+          _this4._setURLHash(selTab.attr("href")); // Update controls
+
+
+          _this4._setAnchor(idx); // Get current step element
+
+
+          var curPage = _this4._getPage(_this4.current_index); // Get next step element
+
+
+          var selPage = _this4._getPage(idx); // transit the step
+
+
+          _this4._transit(selPage, curPage, stepDirection, function () {
+            // Update the current index
+            _this4.current_index = idx; // Fix height with content
+
+            _this4._fixHeight(idx); // Trigger "showStep" event
+
+
+            _this4._triggerEvent("showTab", [selTab, idx, _this4._getStepPosition(idx)]);
+          });
+        });
       }
     }, {
-      key: "_showPrevious",
-      value: function _showPrevious() {
-        var si = this.tabs.length - 1; // Find the previous showable step
+      key: "_getShowable",
+      value: function _getShowable(idx, dir) {
+        var _this5 = this;
 
-        for (var i = this.current_index - 1; i >= 0; i--) {
-          if (this._isShowable(i)) {
-            si = i;
-            break;
+        var si = null;
+        var elmList = dir == 'prev' ? $(this.tabs.slice(0, idx).get().reverse()) : this.tabs.slice(idx + 1); // Find the next showable step in the direction
+
+        elmList.each(function (i, elm) {
+          if (_this5._isEnabled($(elm))) {
+            si = dir == 'prev' ? idx - (i + 1) : i + idx + 1;
+            return false;
           }
-        }
-
-        this._showTab(si);
+        });
+        return si;
       }
     }, {
       key: "_isShowable",
-      value: function _isShowable(idx) {
-        if (this.tabs.eq(idx).hasClass('disabled') || this.tabs.eq(idx).hasClass('hidden')) {
+      value: function _isShowable(elm) {
+        if (!this._isEnabled(elm)) {
           return false;
         }
 
         return true;
       }
     }, {
-      key: "_showTab",
-      value: function _showTab(idx) {
-        // If current tab is requested again, skip
-        if (idx == this.current_index) {
-          return false;
-        } // If tab not found, skip
-
-
-        if (!this.tabs.eq(idx)) {
-          return false;
-        } // If it is a disabled tab, skip
-
-
-        if (!this._isShowable(idx)) {
-          return false;
-        } // Load tab content
-
-
-        this._loadTab(idx);
+      key: "_isEnabled",
+      value: function _isEnabled(elm) {
+        return elm.hasClass(this.options.style.anchorDisabledCss) || elm.hasClass(this.options.style.anchorHiddenCss) ? false : true;
       }
     }, {
-      key: "_loadTab",
-      value: function _loadTab(idx) {
-        var _this2 = this;
-
-        // Get current tab element
-        var curTab = this._getAnchor(this.current_index);
-
-        if (this.current_index !== null) {
-          // Trigger "leaveTab" event
-          if (this._triggerEvent("leaveTab", [curTab, this.current_index]) === false) {
-            return false;
-          }
-        } // Get next tab element
-
-
-        var selTab = this._getAnchor(idx); // Get the content if used
-
-
-        var getTabContent = this._triggerEvent("tabContent", [selTab, idx]);
-
-        if (getTabContent) {
-          if (_typeof(getTabContent) == "object") {
-            getTabContent.then(function (res) {
-              _this2._setTabContent(idx, res);
-
-              _this2._transitTab(idx);
-            })["catch"](function (err) {
-              console.error(err);
-
-              _this2._setTabContent(idx, err);
-
-              _this2._transitTab(idx);
-            });
-          } else if (typeof getTabContent == "string") {
-            this._setTabContent(idx, getTabContent);
-
-            this._transitTab(idx);
-          } else {
-            this._transitTab(idx);
-          }
-        } else {
-          this._transitTab(idx);
+      key: "_getStepDirection",
+      value: function _getStepDirection(idx) {
+        return this.current_index < idx ? "forward" : "backward";
+      }
+    }, {
+      key: "_getStepPosition",
+      value: function _getStepPosition(idx) {
+        if (idx === 0) {
+          return 'first';
+        } else if (idx === this.tabs.length - 1) {
+          return 'last';
         }
+
+        return 'middle';
       }
     }, {
       key: "_getAnchor",
       value: function _getAnchor(idx) {
-        if (idx == null) {
-          return null;
-        }
-
+        if (idx == null || idx == -1) return null;
         return this.tabs.eq(idx);
       }
     }, {
       key: "_getPage",
       value: function _getPage(idx) {
-        if (idx == null) {
-          return null;
+        if (idx == null || idx == -1) return null;
+        return this.pages.eq(idx);
+      }
+    }, {
+      key: "_loadContent",
+      value: function _loadContent(idx, callback) {
+        if (!$.isFunction(this.options.getContent)) {
+          callback();
+          return;
         }
 
-        var anchor = this._getAnchor(idx);
+        var selPage = this._getPage(idx);
 
-        return anchor.length > 0 ? this.main.find(anchor.attr("href")) : null;
+        if (!selPage) {
+          callback();
+          return;
+        } // Get step direction
+
+
+        var stepDirection = this._getStepDirection(idx); // Get step position
+
+
+        var stepPosition = this._getStepPosition(idx); // Get next step element
+
+
+        var selTab = this._getAnchor(idx);
+
+        this.options.getContent(idx, stepDirection, stepPosition, selTab, function (content) {
+          if (content) selPage.html(content);
+          callback();
+        });
       }
     }, {
-      key: "_setTabContent",
-      value: function _setTabContent(idx, html) {
-        var page = this._getPage(idx);
+      key: "_transit",
+      value: function _transit(elmToShow, elmToHide, stepDirection, callback) {
+        var transitFn = $.fn.smartTab.transitions[this.options.transition.animation];
 
-        if (page) {
-          page.html(html);
-        }
-      }
-    }, {
-      key: "_transitTab",
-      value: function _transitTab(idx) {
-        var _this3 = this;
-
-        // Get tab to show element
-        var selTab = this._getAnchor(idx); // Change the url hash to new tab
-
-
-        this._setURLHash(selTab.attr("href")); // Update controls
-
-
-        this._setAnchor(idx); // Animate the tab
-
-
-        this._doTabAnimation(idx, function () {
-          // Fix height with content
-          _this3._fixHeight(idx); // Trigger "showTab" event
-
-
-          _this3._triggerEvent("showTab", [selTab, _this3.current_index]); // Restart auto progress if enabled
-
-
-          _this3._restartAutoProgress();
-        }); // Update the current index
-
-
-        this.current_index = idx;
-      }
-    }, {
-      key: "_doTabAnimation",
-      value: function _doTabAnimation(idx, callback) {
-        var _this4 = this;
-
-        // Get current tab element
-        var curPage = this._getPage(this.current_index); // Get next tab element
-
-
-        var selPage = this._getPage(idx); // Get the transition effect
-
-
-        var transitionEffect = this.options.transition.animation.toLowerCase(); // Complete any ongoing animations
-
-        this._stopAnimations();
-
-        switch (transitionEffect) {
-          case 'slide-horizontal':
-          case 'slide-h':
-            // horizontal slide
-            var containerWidth = this.container.width();
-            var curLastLeft = containerWidth;
-            var nextFirstLeft = containerWidth * -2; // Forward direction
-
-            if (idx > this.current_index) {
-              curLastLeft = containerWidth * -1;
-              nextFirstLeft = containerWidth;
-            } // First load set the container width
-
-
-            if (this.current_index == null) {
-              this.container.height(selPage.outerHeight());
+        if ($.isFunction(transitFn)) {
+          transitFn(elmToShow, elmToHide, stepDirection, this, function (res) {
+            if (res === false) {
+              if (elmToHide !== null) elmToHide.hide();
+              elmToShow.show();
             }
 
-            var css_pos, css_left;
-
-            if (curPage) {
-              css_pos = curPage.css("position");
-              css_left = curPage.css("left");
-              curPage.css("position", 'absolute').css("left", 0).animate({
-                left: curLastLeft
-              }, this.options.transition.speed, this.options.transition.easing, function () {
-                $(this).hide();
-                curPage.css("position", css_pos).css("left", css_left);
-              });
-            }
-
-            css_pos = selPage.css("position");
-            css_left = selPage.css("left");
-            selPage.css("position", 'absolute').css("left", nextFirstLeft).outerWidth(containerWidth).show().animate({
-              left: 0
-            }, this.options.transition.speed, this.options.transition.easing, function () {
-              selPage.css("position", css_pos).css("left", css_left);
-              callback();
-            });
-            break;
-
-          case 'slide-vertical':
-          case 'slide-v':
-            // vertical slide
-            var containerHeight = this.container.height();
-            var curLastTop = containerHeight;
-            var nextFirstTop = containerHeight * -2; // Forward direction
-
-            if (idx > this.current_index) {
-              curLastTop = containerHeight * -1;
-              nextFirstTop = containerHeight;
-            }
-
-            var css_vpos, css_vtop;
-
-            if (curPage) {
-              css_vpos = curPage.css("position");
-              css_vtop = curPage.css("top");
-              curPage.css("position", 'absolute').css("top", 0).animate({
-                top: curLastTop
-              }, this.options.transition.speed, this.options.transition.easing, function () {
-                $(this).hide();
-                curPage.css("position", css_vpos).css("top", css_vtop);
-              });
-            }
-
-            css_vpos = selPage.css("position");
-            css_vtop = selPage.css("top");
-            selPage.css("position", 'absolute').css("top", nextFirstTop).show().animate({
-              top: 0
-            }, this.options.transition.speed, this.options.transition.easing, function () {
-              selPage.css("position", css_vpos).css("top", css_vtop);
-              callback();
-            });
-            break;
-
-          case 'slide-swing':
-          case 'slide-s':
-            // normal slide
-            if (curPage) {
-              curPage.slideUp('fast', this.options.transition.easing, function () {
-                selPage.slideDown(_this4.options.transition.speed, _this4.options.transition.easing, function () {
-                  callback();
-                });
-              });
-            } else {
-              selPage.slideDown(this.options.transition.speed, this.options.transition.easing, function () {
-                callback();
-              });
-            }
-
-            break;
-
-          case 'fade':
-            // normal fade
-            if (curPage) {
-              curPage.fadeOut('fast', this.options.transition.easing, function () {
-                selPage.fadeIn('fast', _this4.options.transition.easing, function () {
-                  callback();
-                });
-              });
-            } else {
-              selPage.fadeIn(this.options.transition.speed, this.options.transition.easing, function () {
-                callback();
-              });
-            }
-
-            break;
-
-          default:
-            if (curPage) {
-              curPage.hide();
-            }
-
-            selPage.show();
             callback();
-            break;
+          });
+        } else {
+          if (elmToHide !== null) elmToHide.hide();
+          elmToShow.show();
+          callback();
         }
-      }
-    }, {
-      key: "_stopAnimations",
-      value: function _stopAnimations() {
-        this.pages.finish();
-        this.container.finish();
-      }
-    }, {
-      key: "_setAnchor",
-      value: function _setAnchor(idx) {
-        this.tabs.eq(this.current_index).removeClass("active");
-        this.tabs.eq(idx).addClass("active");
-      }
-    }, {
-      key: "_getTabIndex",
-      value: function _getTabIndex() {
-        // Get selected tab from the url
-        var idx = this._getURLHashIndex();
-
-        return idx === false ? this.options.selected : idx;
       }
     }, {
       key: "_fixHeight",
       value: function _fixHeight(idx) {
-        // Auto adjust height of the container
-        if (this.options.autoAdjustHeight) {
-          var selPage = this._getPage(idx);
+        if (this.options.autoAdjustHeight === false) {
+          this.container.css('height', 'auto');
+          return;
+        } // Auto adjust height of the container
 
+
+        var contentHeight = this._getPage(idx).outerHeight();
+
+        if ($.isFunction(this.container.finish) && $.isFunction(this.container.animate) && contentHeight > 0) {
           this.container.finish().animate({
-            height: selPage.outerHeight()
+            height: contentHeight
           }, this.options.transition.speed);
+        } else {
+          this.container.css({
+            height: contentHeight > 0 ? contentHeight : 'auto'
+          });
         }
       }
     }, {
-      key: "_setTheme",
-      value: function _setTheme(theme) {
-        this.main.removeClass(function (index, className) {
-          return (className.match(/(^|\s)st-theme-\S+/g) || []).join(' ');
-        }).addClass('st-theme-' + theme);
-      }
-    }, {
-      key: "_setOrientation",
-      value: function _setOrientation(orientation) {
-        this.main.removeClass('st-vertical st-horizontal').addClass('st-' + orientation);
+      key: "_setAnchor",
+      value: function _setAnchor(idx) {
+        // Current step anchor > Remove other classes
+        if (this.current_index !== null && this.current_index >= 0) {
+          this.tabs.eq(this.current_index).removeClass(this.options.style.anchorActiveCss);
+        } // Next step anchor > Remove other classes and add active class
+
+
+        this.tabs.eq(idx).addClass(this.options.style.anchorActiveCss);
       } // HELPER FUNCTIONS
 
     }, {
       key: "_keyNav",
       value: function _keyNav(e) {
-        // Keyboard navigation
-        if ($.inArray(e.which, this.options.keyboardSettings.keyLeft) > -1) {
+        if (!this.options.keyboard.keyNavigation) {
+          return;
+        } // Keyboard navigation
+
+
+        if ($.inArray(e.which, this.options.keyboard.keyLeft) > -1) {
           // left
-          this._showPrevious();
+          this._navigate('prev');
 
           e.preventDefault();
-        } else if ($.inArray(e.which, this.options.keyboardSettings.keyRight) > -1) {
+        } else if ($.inArray(e.which, this.options.keyboard.keyRight) > -1) {
           // right
-          this._showNext();
+          this._navigate('next');
+
+          e.preventDefault();
+        } else if ($.inArray(e.which, this.options.keyboard.keyHome) > -1) {
+          // first
+          this._navigate('first');
+
+          e.preventDefault();
+        } else if ($.inArray(e.which, this.options.keyboard.keyEnd) > -1) {
+          // last
+          this._navigate('last');
 
           e.preventDefault();
         } else {
           return; // exit this handler for other keys
         }
-      } // Auto progress
-
-    }, {
-      key: "_startAutoProgress",
-      value: function _startAutoProgress() {
-        var _this5 = this;
-
-        if (this.options.autoProgress.enabled && !this.autoProgressId) {
-          this.autoProgressId = setInterval(function () {
-            return _this5._showNext();
-          }, this.options.autoProgress.interval);
-        }
-      }
-    }, {
-      key: "_stopAutoProgress",
-      value: function _stopAutoProgress() {
-        if (this.autoProgressId) {
-          clearInterval(this.autoProgressId);
-          this.autoProgressId = null;
-        }
-      }
-    }, {
-      key: "_restartAutoProgress",
-      value: function _restartAutoProgress() {
-        this._stopAutoProgress();
-
-        this._startAutoProgress();
       }
     }, {
       key: "_triggerEvent",
@@ -614,15 +529,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       key: "_setURLHash",
       value: function _setURLHash(hash) {
-        if (this.options.enableURLhash && window.location.hash !== hash) {
+        if (this.options.enableUrlHash && window.location.hash !== hash) {
           history.pushState(null, null, hash);
         }
       }
     }, {
       key: "_getURLHashIndex",
       value: function _getURLHashIndex() {
-        if (this.options.enableURLhash) {
-          // Get tab number from url hash if available
+        if (this.options.enableUrlHash) {
+          // Get step number from url hash if available
           var hash = window.location.hash;
 
           if (hash.length > 0) {
@@ -637,47 +552,108 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         return false;
       }
     }, {
-      key: "_loader",
-      value: function _loader(action) {
-        switch (action) {
-          case 'show':
-            this.main.addClass('st-loading');
-            break;
-
-          case 'hide':
-            this.main.removeClass('st-loading');
-            break;
-
-          default:
-            this.main.toggleClass('st-loading');
-        }
-      }
-    }, {
       key: "_showError",
       value: function _showError(msg) {
         console.error(msg);
+      } // Auto progress
+
+    }, {
+      key: "_startAutoProgress",
+      value: function _startAutoProgress() {
+        var _this6 = this;
+
+        if (this.options.autoProgress.enabled && !this.autoProgressId) {
+          this.autoProgressId = setInterval(function () {
+            return _this6._navigate('next');
+          }, this.options.autoProgress.interval);
+        }
+      }
+    }, {
+      key: "_stopAutoProgress",
+      value: function _stopAutoProgress() {
+        if (this.autoProgressId) {
+          clearInterval(this.autoProgressId);
+          this.autoProgressId = null;
+        }
+      }
+    }, {
+      key: "_restartAutoProgress",
+      value: function _restartAutoProgress() {
+        this._stopAutoProgress();
+
+        this._startAutoProgress();
       } // PUBLIC FUNCTIONS
 
     }, {
       key: "goToTab",
-      value: function goToTab(tabIndex) {
-        this._showTab(tabIndex);
+      value: function goToTab(index) {
+        if (!this._isShowable(this.tabs.eq(index))) {
+          return;
+        }
+
+        this._showTab(index);
+      }
+    }, {
+      key: "next",
+      value: function next() {
+        this._navigate('next');
+      }
+    }, {
+      key: "prev",
+      value: function prev() {
+        this._navigate('prev');
+      }
+    }, {
+      key: "first",
+      value: function first() {
+        this._navigate('first');
+      }
+    }, {
+      key: "last",
+      value: function last() {
+        this._navigate('last');
+      }
+    }, {
+      key: "reset",
+      value: function reset() {
+        // Clear css from steps except default, hidden and disabled
+        this.tabs.removeClass(this.options.style.anchorActiveCss); // Reset all
+
+        this._setURLHash('#');
+
+        this._init();
+
+        this._load();
       }
     }, {
       key: "setOptions",
       value: function setOptions(options) {
         this.options = $.extend(true, {}, this.options, options);
 
-        this._initOptions();
+        this._init();
+      }
+    }, {
+      key: "getOptions",
+      value: function getOptions() {
+        return this.options;
+      }
+    }, {
+      key: "getInfo",
+      value: function getInfo() {
+        return {
+          currentPage: this.current_index ? this.current_index : 0,
+          totalPages: this.tabs ? this.tabs.length : 0
+        };
       }
     }, {
       key: "loader",
       value: function loader(state) {
-        if (state === "show") {
-          this.main.addClass('st-loading');
-        } else {
-          this.main.removeClass('st-loading');
-        }
+        this.main.toggleClass(this.options.style.loaderCss, state === "show");
+      }
+    }, {
+      key: "fixHeight",
+      value: function fixHeight() {
+        this._fixHeight(this.current_index);
       }
     }]);
 
@@ -705,5 +681,158 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         return this;
       }
     }
+  }; // Transition effects
+
+
+  $.fn.smartTab.transitions = {
+    fade: function fade(elmToShow, elmToHide, stepDirection, mainObj, callback) {
+      if (!$.isFunction(elmToShow.fadeOut)) {
+        callback(false);
+        return;
+      }
+
+      if (elmToHide) {
+        elmToHide.fadeOut(mainObj.options.transition.speed, mainObj.options.transition.easing, function () {
+          elmToShow.fadeIn(mainObj.options.transition.speed, mainObj.options.transition.easing, function () {
+            callback();
+          });
+        });
+      } else {
+        elmToShow.fadeIn(mainObj.options.transition.speed, mainObj.options.transition.easing, function () {
+          callback();
+        });
+      }
+    },
+    slideSwing: function slideSwing(elmToShow, elmToHide, stepDirection, mainObj, callback) {
+      if (!$.isFunction(elmToShow.slideDown)) {
+        callback(false);
+        return;
+      }
+
+      if (elmToHide) {
+        elmToHide.slideUp(mainObj.options.transition.speed, mainObj.options.transition.easing, function () {
+          elmToShow.slideDown(mainObj.options.transition.speed, mainObj.options.transition.easing, function () {
+            callback();
+          });
+        });
+      } else {
+        elmToShow.slideDown(mainObj.options.transition.speed, mainObj.options.transition.easing, function () {
+          callback();
+        });
+      }
+    },
+    slideHorizontal: function slideHorizontal(elmToShow, elmToHide, stepDirection, mainObj, callback) {
+      if (!$.isFunction(elmToShow.animate)) {
+        callback(false);
+        return;
+      } // Horizontal slide
+
+
+      var animFn = function animFn(elm, iniLeft, finLeft, cb) {
+        elm.css({
+          position: 'absolute',
+          left: iniLeft
+        }).show().animate({
+          left: finLeft
+        }, mainObj.options.transition.speed, mainObj.options.transition.easing, cb);
+      };
+
+      if (mainObj.current_index == -1) {
+        // Set container height at page load 
+        mainObj.container.height(elmToShow.outerHeight());
+      }
+
+      var containerWidth = mainObj.container.width();
+
+      if (elmToHide) {
+        var initCss1 = elmToHide.css(["position", "left"]);
+        var finLeft = containerWidth * (stepDirection == 'backward' ? 1 : -1);
+        animFn(elmToHide, 0, finLeft, function () {
+          elmToHide.hide().css(initCss1);
+        });
+      }
+
+      var initCss2 = elmToShow.css(["position"]);
+      var iniLeft = containerWidth * (stepDirection == 'backward' ? -2 : 1);
+      animFn(elmToShow, iniLeft, 0, function () {
+        elmToShow.css(initCss2);
+        callback();
+      });
+    },
+    slideVertical: function slideVertical(elmToShow, elmToHide, stepDirection, mainObj, callback) {
+      if (!$.isFunction(elmToShow.animate)) {
+        callback(false);
+        return;
+      } // Vertical slide
+
+
+      var animFn = function animFn(elm, iniTop, finTop, cb) {
+        elm.css({
+          position: 'absolute',
+          top: iniTop
+        }).show().animate({
+          top: finTop
+        }, mainObj.options.transition.speed, mainObj.options.transition.easing, cb);
+      };
+
+      if (mainObj.current_index == -1) {
+        // Set container height at page load 
+        mainObj.container.height(elmToShow.outerHeight());
+      }
+
+      var containerHeight = mainObj.container.height();
+
+      if (elmToHide) {
+        var initCss1 = elmToHide.css(["position", "top"]);
+        var finTop = containerHeight * (stepDirection == 'backward' ? -1 : 1);
+        animFn(elmToHide, 0, finTop, function () {
+          elmToHide.hide().css(initCss1);
+        });
+      }
+
+      var initCss2 = elmToShow.css(["position"]);
+      var iniTop = containerHeight * (stepDirection == 'backward' ? 1 : -2);
+      animFn(elmToShow, iniTop, 0, function () {
+        elmToShow.css(initCss2);
+        callback();
+      });
+    },
+    css: function css(elmToShow, elmToHide, stepDirection, mainObj, callback) {
+      if (mainObj.options.transition.fwdHideCss.length == 0 || mainObj.options.transition.bckHideCss.length == 0) {
+        callback(false);
+        return;
+      } // CSS Animation
+
+
+      var animFn = function animFn(elm, animation, cb) {
+        if (!animation || animation.length == 0) cb();
+        elm.addClass(animation).one("animationend", function (e) {
+          $(e.currentTarget).removeClass(animation);
+          cb();
+        });
+        elm.addClass(animation).one("animationcancel", function (e) {
+          $(e.currentTarget).removeClass(animation);
+          cb('cancel');
+        });
+      };
+
+      var showCss = mainObj.options.transition.prefixCss + ' ' + (stepDirection == 'backward' ? mainObj.options.transition.bckShowCss : mainObj.options.transition.fwdShowCss);
+
+      if (elmToHide) {
+        var hideCss = mainObj.options.transition.prefixCss + ' ' + (stepDirection == 'backward' ? mainObj.options.transition.bckHideCss : mainObj.options.transition.fwdHideCss);
+        animFn(elmToHide, hideCss, function () {
+          elmToHide.hide();
+          animFn(elmToShow, showCss, function () {
+            callback();
+          });
+          elmToShow.show();
+        });
+      } else {
+        animFn(elmToShow, showCss, function () {
+          callback();
+        });
+        elmToShow.show();
+      }
+    }
   };
-})(jQuery, window, document);
+});

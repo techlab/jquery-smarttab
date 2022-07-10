@@ -1,586 +1,541 @@
 /*!
- * jQuery SmartTab v3.1.1
- * The flexible jQuery tab control plugin
- * http://www.techlaboratory.net/jquery-smarttab
- *
- * Created by Dipu Raj
- * http://dipu.me
- *
- * @license Licensed under the terms of the MIT License
- * https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
- */
+* jQuery SmartTab v4.0.1
+* The flexible tab control plugin for jQuery
+* http://www.techlaboratory.net/jquery-smarttab
+*
+* Created by Dipu Raj (http://dipu.me)
+*
+* Licensed under the terms of the MIT License
+* https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
+*/
 
-;(function ($, window, document, undefined) {
+(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node/CommonJS
+        module.exports = function( root, jQuery ) {
+            if ( jQuery === undefined ) {
+                // require('jQuery') returns a factory that requires window to
+                // build a jQuery instance, we normalize how we use modules
+                // that require this pattern but the window provided is a noop
+                // if it's defined (how jquery works)
+                if ( typeof window !== 'undefined' ) {
+                    jQuery = require('jquery');
+                }
+                else {
+                    jQuery = require('jquery')(root);
+                }
+            }
+            factory(jQuery);
+            return jQuery;
+        };
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
     "use strict";
 
     // Default options
-    var defaults = {
+    const defaults = {
         selected: 0, // Initial selected tab, 0 = first tab
-        theme: 'default', // theme for the tab, related css need to include for other than default theme
-        orientation: 'horizontal', // Nav menu orientation. horizontal/vertical
+        theme: 'basic', // theme, related css need to include for other than default theme
         justified: true, // Nav menu justification. true/false
         autoAdjustHeight: true, // Automatically adjust content height
         backButtonSupport: true, // Enable the back button support
-        enableURLhash: true, // Enable selection of the tab based on url hash
+        enableUrlHash: true, // Enable selection of the step based on url hash
         transition: {
-            animation: 'none', // Effect on navigation, none/fade/slide-horizontal/slide-vertical/slide-swing
-            speed: '400', // Transion animation speed
-            easing:'' // Transition animation easing. Not supported without a jQuery easing plugin
+            animation: 'none', // Animation effect on navigation, none|fade|slideHorizontal|slideVertical|slideSwing|css(Animation CSS class also need to specify)
+            speed: '400', // Animation speed. Not used if animation is 'css'
+            easing: '', // Animation easing. Not supported without a jQuery easing plugin. Not used if animation is 'css'
+            prefixCss: '', // Only used if animation is 'css'. Animation CSS prefix
+            fwdShowCss: '', // Only used if animation is 'css'. Step show Animation CSS on forward direction
+            fwdHideCss: '', // Only used if animation is 'css'. Step hide Animation CSS on forward direction
+            bckShowCss: '', // Only used if animation is 'css'. Step show Animation CSS on backward direction
+            bckHideCss: '', // Only used if animation is 'css'. Step hide Animation CSS on backward direction
         },
         autoProgress: { // Auto navigate tabs on interval
             enabled: false, // Enable/Disable Auto navigation
             interval: 3500, // Auto navigate Interval (used only if "autoProgress" is enabled)
             stopOnFocus: true, // Stop auto navigation on focus and resume on outfocus
         },
-        keyboardSettings: {
+        keyboard: {
             keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
-            keyLeft: [37], // Left key code
-            keyRight: [39] // Right key code
-        }
+            keyLeft: [37, 38], // Left key code
+            keyRight: [39, 40], // Right key code
+            keyHome: [36], // Home key code
+            keyEnd: [35] // End key code
+        },
+        style: { // CSS Class settings
+            mainCss: 'st',
+            navCss: 'nav',
+            navLinkCss: 'nav-link',
+            contentCss: 'tab-content',
+            contentPanelCss: 'tab-pane',
+            themePrefixCss: 'st-theme-',
+            justifiedCss: 'st-justified',
+            anchorDefaultCss: 'default',
+            anchorActiveCss: 'active',
+            loaderCss: 'st-loading'
+        },
+        getContent: null, // Callback function for content loading
     };
 
     class SmartTab {
 
-      constructor(element, options) {
-          // Merge user settings with default
-          this.options        = $.extend(true, {}, defaults, options);
-          // Main container element
-          this.main           = $(element);
-          // Navigation bar element
-          this.nav            = this._getFirstDescendant('.nav');
-          // Tab anchor elements
-          this.tabs           = this.nav.find('.nav-link');
-          // Content container
-          this.container      = this._getFirstDescendant('.tab-content');
-          // Content pages
-          this.pages          = this.container.children('.tab-pane');
-          // Active Tab index
-          this.current_index  = null;
-          // Autoprogress timer id
-          this.autoProgressId = null;
-          // Assign options
-          this._initOptions();
-          // Initial load
-          this._initLoad();
-      }
+        constructor(element, options) {
+            // Merge user settings with default
+            this.options        = $.extend(true, {}, defaults, options);
+            // Main container element
+            this.main           = $(element);
+            // Navigation bar element
+            this.nav            = this._getFirstDescendant('.' + this.options.style.navCss);
+            // Content container
+            this.container      = this._getFirstDescendant('.' + this.options.style.contentCss);
+            // Tab anchor elements
+            this.tabs           = this.nav.find('.' + this.options.style.navLinkCss);
+            // Content pages
+            this.pages          = this.container.children('.' + this.options.style.contentPanelCss);
+            // Initial index
+            this.current_index  = -1;
+            // Autoprogress timer id
+            this.autoProgressId = null;
+            // Is initialiazed
+            this.is_init        = false;    
 
-      // Initial Load Method
-      _initLoad() {
-          // Clean the elements
-          this.pages.hide();
-          this.tabs.removeClass('active');
+            // Initialize options
+            this._init();
 
-          // Get the initial tab index
-          let idx = this._getTabIndex();
-          // Show the initial tab
-          this._showTab(idx);
-      }
-
-      // Initialize options
-      _initOptions() {
-        // Set the elements
-        this._setElements();
-        // Assign plugin events
-        this._setEvents();
-      }
-
-      _getFirstDescendant(selector) {
-          // Check for first level element
-          let elm = this.main.children(selector);
-          if (elm.length > 0) {
-              return elm;
-          }
-
-          // Check for second level element
-          this.main.children().each((i, n) => {
-              let tmp = $(n).children(selector);
-              if (tmp.length > 0) {
-                  elm = tmp;
-                  return false;
-              }
-          });
-          if (elm.length > 0) {
-              return elm;
-          }
-
-          // Element not found
-          this._showError("Element not found " + selector);
-          return false;
-      }
-
-      _setElements() {
-          // Set the main element
-          this.main.addClass('st');
-          if (this.options.justified === true) {
-            this.main.addClass('st-justified');
-          } else {
-            this.main.removeClass('st-justified');
-          }
-
-          this._setTheme(this.options.theme);
-          this._setOrientation(this.options.orientation);
-      }
-
-      _setEvents() {
-          // Check if event handler already exists
-          if (this.main.data('click-init')) {
-              return true;
-          }
-          // Flag item to prevent attaching handler again
-          this.main.data('click-init', true);
-
-          // Anchor click event
-          $(this.tabs).on("click", (e) => {
-              e.preventDefault();
-
-              this._showTab(this.tabs.index(e.currentTarget));
-          });
-
-          // Keyboard navigation event
-          if (this.options.keyboardSettings.keyNavigation) {
-              $(document).keyup((e) => {
-                  this._keyNav(e);
-              });
-          }
-
-          // Back/forward browser button event
-          if (this.options.backButtonSupport) {
-              $(window).on('hashchange', (e) => {
-                  let idx = this._getURLHashIndex();
-                  if (idx !== false) {
-                      e.preventDefault();
-                      this._showTab(idx);
-                  }
-              });
-          }
-
-          if (this.options.autoProgress.enabled && this.options.autoProgress.stopOnFocus) {
-              $(this.main).on("mouseover", (e) => {
-                  e.preventDefault();
-                  this._stopAutoProgress();
-              });
-
-              $(this.main).on("mouseleave", (e) => {
-                  e.preventDefault();
-                  this._startAutoProgress();
-              });
-          }
-      }
-
-      _showNext() {
-          var si = 0;
-          // Find the next showable step
-          for (var i = this.current_index + 1; i < this.tabs.length; i++) {
-              if (this._isShowable(i)) {
-                  si = i;
-                  break;
-              }
-          }
-
-          this._showTab(si);
-      }
-
-      _showPrevious() {
-          var si = this.tabs.length - 1;
-          // Find the previous showable step
-          for (var i = this.current_index - 1; i >= 0; i--) {
-              if (this._isShowable(i)) {
-                  si = i;
-                  break;
-              }
-          }
-
-          this._showTab(si);
-      }
-
-      _isShowable(idx) {
-          if (this.tabs.eq(idx).hasClass('disabled') || this.tabs.eq(idx).hasClass('hidden')) {
-              return false;
-          }
-          return true;
-      }
-
-      _showTab(idx) {
-          // If current tab is requested again, skip
-          if (idx == this.current_index) {
-              return false;
-          }
-          // If tab not found, skip
-          if (!this.tabs.eq(idx)) {
-              return false;
-          }
-          // If it is a disabled tab, skip
-          if (!this._isShowable(idx)) {
-              return false;
-          }
-          // Load tab content
-          this._loadTab(idx);
-      }
-
-      _loadTab(idx) {
-          // Get current tab element
-          let curTab          = this._getAnchor(this.current_index);
-          if (this.current_index !== null) {
-              // Trigger "leaveTab" event
-              if (this._triggerEvent("leaveTab", [curTab, this.current_index]) === false) {
-                  return false;
-              }
-          }
-
-          // Get next tab element
-          let selTab         = this._getAnchor(idx);
-          // Get the content if used
-          let getTabContent  = this._triggerEvent("tabContent", [selTab, idx]);
-          if (getTabContent) {
-              if (typeof getTabContent == "object") {
-                  getTabContent.then((res) => {
-                      this._setTabContent(idx, res);
-                      this._transitTab(idx);
-                  }).catch((err) => {
-                      console.error(err);
-                      this._setTabContent(idx, err);
-                      this._transitTab(idx);
-                  });
-              } else if (typeof getTabContent == "string") {
-                  this._setTabContent(idx, getTabContent);
-                  this._transitTab(idx);
-              } else {
-                  this._transitTab(idx);
-              }
-          } else {
-              this._transitTab(idx);
-          }
-      }
-
-      _getAnchor(idx) {
-          if (idx == null) {
-              return null;
-          }
-          return this.tabs.eq(idx);
-      }
-
-      _getPage(idx) {
-          if (idx == null) {
-              return null;
-          }
-          let anchor = this._getAnchor(idx);
-          return anchor.length > 0 ? this.main.find(anchor.attr("href")) : null;
-      }
-
-      _setTabContent(idx, html) {
-          let page = this._getPage(idx);
-          if (page) {
-              page.html(html);
-          }
-      }
-
-      _transitTab(idx) {
-          // Get tab to show element
-          let selTab          = this._getAnchor(idx);
-          // Change the url hash to new tab
-          this._setURLHash(selTab.attr("href"));
-          // Update controls
-          this._setAnchor(idx);
-          // Animate the tab
-          this._doTabAnimation(idx, () => {
-              // Fix height with content
-              this._fixHeight(idx);
-              // Trigger "showTab" event
-              this._triggerEvent("showTab", [selTab, this.current_index]);
-              // Restart auto progress if enabled
-              this._restartAutoProgress();
-          });
-          // Update the current index
-          this.current_index  = idx;
-      }
-
-      _doTabAnimation(idx, callback) {
-          // Get current tab element
-          let curPage           = this._getPage(this.current_index);
-          // Get next tab element
-          let selPage           = this._getPage(idx);
-          // Get the transition effect
-          let transitionEffect  = this.options.transition.animation.toLowerCase();
-          // Complete any ongoing animations
-          this._stopAnimations();
-
-          switch (transitionEffect) {
-            case 'slide-horizontal':
-            case 'slide-h':
-                // horizontal slide
-                var containerWidth  = this.container.width();
-                var curLastLeft     = containerWidth;
-                var nextFirstLeft   = containerWidth * -2;
-
-                // Forward direction
-                if (idx > this.current_index) {
-                  curLastLeft   = containerWidth * -1;
-                  nextFirstLeft = containerWidth;
-                }
-
-                // First load set the container width
-                if (this.current_index == null) {
-                  this.container.height(selPage.outerHeight());
-                }
-
-                var css_pos, css_left;
-                if (curPage) {
-                    css_pos   = curPage.css("position");
-                    css_left  = curPage.css("left");
-                    curPage.css("position", 'absolute')
-                            .css("left", 0)
-                            .animate({
-                             left: curLastLeft
-                            },
-                            this.options.transition.speed,
-                            this.options.transition.easing,
-                            function() {
-                              $(this).hide();
-                              curPage.css("position", css_pos).css("left", css_left);
-                            });
-                }
-
-                css_pos   = selPage.css("position");
-                css_left  = selPage.css("left");
-                selPage.css("position", 'absolute')
-                        .css("left", nextFirstLeft)
-                        .outerWidth(containerWidth)
-                        .show()
-                        .animate({
-                          left: 0
-                        },
-                        this.options.transition.speed,
-                        this.options.transition.easing,
-                        () => {
-                            selPage.css("position", css_pos).css("left", css_left);
-                            callback();
-                        });
-                break;
-              case 'slide-vertical':
-              case 'slide-v':
-                  // vertical slide
-                  var containerHeight = this.container.height();
-                  var curLastTop      = containerHeight;
-                  var nextFirstTop    = containerHeight * -2;
-
-                  // Forward direction
-                  if (idx > this.current_index) {
-                    curLastTop   = containerHeight * -1;
-                    nextFirstTop = containerHeight;
-                  }
-
-                  var css_vpos, css_vtop;
-                  if (curPage) {
-                      css_vpos = curPage.css("position");
-                      css_vtop = curPage.css("top");
-                      curPage.css("position", 'absolute')
-                              .css("top", 0)
-                              .animate({
-                               top: curLastTop
-                              },
-                              this.options.transition.speed,
-                              this.options.transition.easing,
-                              function() {
-                                $(this).hide();
-                                curPage.css("position", css_vpos).css("top", css_vtop);
-                              });
-                  }
-
-                  css_vpos = selPage.css("position");
-                  css_vtop = selPage.css("top");
-                  selPage.css("position", 'absolute')
-                          .css("top", nextFirstTop)
-                          .show()
-                          .animate({
-                            top: 0
-                          },
-                          this.options.transition.speed,
-                          this.options.transition.easing,
-                          () => {
-                              selPage.css("position", css_vpos).css("top", css_vtop);
-                              callback();
-                          });
-                  break;
-              case 'slide-swing':
-              case 'slide-s':
-                  // normal slide
-                  if (curPage) {
-                      curPage.slideUp('fast', this.options.transition.easing, () => {
-                          selPage.slideDown(this.options.transition.speed, this.options.transition.easing, () => {
-                              callback();
-                          });
-                      });
-                  } else {
-                      selPage.slideDown(this.options.transition.speed, this.options.transition.easing, () => {
-                          callback();
-                      });
-                  }
-                  break;
-              case 'fade':
-                  // normal fade
-                  if (curPage) {
-                      curPage.fadeOut('fast', this.options.transition.easing, () => {
-                          selPage.fadeIn('fast', this.options.transition.easing, () => {
-                              callback();
-                          });
-                      });
-                  } else {
-                      selPage.fadeIn(this.options.transition.speed, this.options.transition.easing, () => {
-                          callback();
-                      });
-                  }
-                  break;
-              default:
-                  if (curPage) {
-                      curPage.hide();
-                  }
-                  selPage.show();
-                  callback();
-                  break;
-          }
-      }
-
-      _stopAnimations() {
-          this.pages.finish();
-          this.container.finish();
-      }
-
-      _setAnchor(idx) {
-          this.tabs.eq(this.current_index).removeClass("active");
-          this.tabs.eq(idx).addClass("active");
-      }
-
-      _getTabIndex() {
-          // Get selected tab from the url
-          let idx = this._getURLHashIndex();
-          return (idx === false) ? this.options.selected : idx;
-      }
-
-      _fixHeight(idx) {
-          // Auto adjust height of the container
-          if (this.options.autoAdjustHeight) {
-              let selPage = this._getPage(idx);
-              this.container
-                  .finish()
-                  .animate({
-                      height: selPage.outerHeight()
-                  },
-                  this.options.transition.speed);
-          }
-      }
-
-      _setTheme(theme) {
-          this.main.removeClass(function (index, className) {
-              return (className.match (/(^|\s)st-theme-\S+/g) || []).join(' ');
-          }).addClass('st-theme-' + theme);
-      }
-
-      _setOrientation(orientation) {
-          this.main.removeClass('st-vertical st-horizontal').addClass('st-' + orientation);
-      }
-
-      // HELPER FUNCTIONS
-
-      _keyNav(e) {
-          // Keyboard navigation
-          if ($.inArray(e.which, this.options.keyboardSettings.keyLeft) > -1) {
-              // left
-              this._showPrevious();
-              e.preventDefault();
-          } else if ($.inArray(e.which, this.options.keyboardSettings.keyRight) > -1) {
-              // right
-              this._showNext();
-              e.preventDefault();
-          } else {
-              return; // exit this handler for other keys
-          }
-      }
-
-      // Auto progress
-      _startAutoProgress() {
-        if (this.options.autoProgress.enabled && !this.autoProgressId) {
-          this.autoProgressId = setInterval(() => this._showNext(), this.options.autoProgress.interval);
+            // Load asynchronously
+            setTimeout(() => {
+                this._load();
+            }, 0);
         }
-      }
 
-      _stopAutoProgress() {
-        if (this.autoProgressId) {
-          clearInterval(this.autoProgressId);
-          this.autoProgressId = null;
+        // Initialize options
+        _init() {
+            // Set the elements
+            this._setElements();
+
+            // Skip if already init
+            if (this.is_init === true) return true;
+
+            // Assign plugin events
+            this._setEvents();
+
+            this.is_init = true;
+            // Trigger the initialized event
+            this._triggerEvent("initialized");
         }
-      }
 
-      _restartAutoProgress() {
-        this._stopAutoProgress();
-        this._startAutoProgress();
-      }
+        // Initial Load Method
+        _load() {
+            // Clean the elements
+            this.pages.hide();
+            // Clear other states from the steps
+            this.tabs.removeClass(this.options.style.anchorActiveCss);
 
-      _triggerEvent(name, params) {
-          // Trigger an event
-          var e = $.Event(name);
-          this.main.trigger(e, params);
-          if (e.isDefaultPrevented()) {
-              return false;
-          }
-          return e.result;
-      }
+            // Initial step index
+            this.current_index  = -1;
 
-      _setURLHash(hash) {
-          if (this.options.enableURLhash && window.location.hash !== hash) {
-              history.pushState(null,null,hash);
-          }
-      }
+            // Get the initial step index
+            let idx = this._getURLHashIndex();
+            idx = idx ? idx : this.options.selected;
 
-      _getURLHashIndex() {
-          if (this.options.enableURLhash) {
-            // Get tab number from url hash if available
-            var hash = window.location.hash;
-            if (hash.length > 0) {
-                var elm = this.nav.find("a[href*='" + hash + "']");
-                if (elm.length > 0) {
-                    return this.tabs.index(elm);
+            // Show the initial step
+            this._showTab(idx);
+            // Trigger the loaded event
+            this._triggerEvent("loaded");
+        }
+
+        _getFirstDescendant(selector) {
+            // Check for first level element
+            let elm = this.main.children(selector);
+            if (elm.length > 0) {
+                return elm;
+            }
+
+            // Check for second level element
+            this.main.children().each((i, n) => {
+                let tmp = $(n).children(selector);
+                if (tmp.length > 0) {
+                    elm = tmp;
+                    return false;
+                }
+            });
+            if (elm.length > 0) {
+                return elm;
+            }
+
+            // Element not found
+            this._showError("Element not found " + selector);
+            return false;
+        }
+
+        _setElements() {
+            // Set the main element
+            this.main.addClass(this.options.style.mainCss);
+
+            // Set theme option
+            this.main.removeClass((i, className) => {
+                return (className.match(new RegExp('(^|\\s)' + this.options.style.themePrefixCss + '\\S+','g')) || []).join(' ');
+            }).addClass(this.options.style.themePrefixCss + this.options.theme);
+            
+            // Set justify option
+            this.main.toggleClass(this.options.style.justifiedCss, this.options.justified);
+        }
+
+        _setEvents() {
+            // Anchor click event
+            this.tabs.on("click", (e) => {
+                e.preventDefault();
+                const elm = $(e.currentTarget);
+                if (this._isShowable(elm)) {
+                    // Get the step index
+                    this._showTab(this.tabs.index(elm));
+                }
+            });
+
+            if (this.options.autoProgress.enabled && this.options.autoProgress.stopOnFocus) {
+                $(this.main).on("mouseover", (e) => {
+                    e.preventDefault();
+                    this._stopAutoProgress();
+                });
+  
+                $(this.main).on("mouseleave", (e) => {
+                    e.preventDefault();
+                    this._startAutoProgress();
+                });
+            }
+            
+            // Keyboard navigation event            
+            $(document).keyup((e) => {
+                this._keyNav(e);
+            });        
+
+            // Back/forward browser button event
+            $(window).on('hashchange', (e) => {
+                if (this.options.backButtonSupport !== true) {
+                    return;
+                }
+                const idx = this._getURLHashIndex();
+                if (idx && this._isShowable(this.tabs.eq(idx))) {
+                    e.preventDefault();
+                    this._showTab(idx);
+                }
+            });
+
+            // Fix content height on window resize
+            $(window).on('resize', (e) => {
+               this._fixHeight(this.current_index);
+            });
+        }
+
+        _navigate(dir) {
+            if (dir == 'first') {
+                this._showTab(this._getShowable(-1, 'next'));
+            } else if (dir == 'last') {
+                this._showTab(this._getShowable(this.tabs.length, 'prev'));
+            } else {
+                this._showTab(this._getShowable(this.current_index, dir));
+            }
+        }
+
+        _showTab(idx) {
+            if (idx === -1 || idx === null) return false;
+
+            // If current step is requested again, skip
+            if (idx == this.current_index) return false;
+
+            // If step not found, skip
+            if (!this.tabs.eq(idx)) return false;
+
+            // If it is a disabled step, skip
+            if (!this._isEnabled(this.tabs.eq(idx))) return false;
+
+            // Get the direction of navigation
+            const stepDirection = this._getStepDirection(idx);
+
+            if (this.current_index !== -1) {
+                // Trigger "leaveStep" event
+                if (this._triggerEvent("leaveTab", [this._getAnchor(this.current_index), this.current_index, idx, stepDirection]) === false) {
+                    return false;
                 }
             }
-          }
-          return false;
-      }
 
-      _loader(action) {
-          switch (action) {
-              case 'show':
-                  this.main.addClass('st-loading');
-                  break;
-              case 'hide':
-                  this.main.removeClass('st-loading');
-                  break;
-              default:
-                  this.main.toggleClass('st-loading');
-          }
-      }
+            this._loadContent(idx, () => { 
+                // Get step to show element
+                const selTab = this._getAnchor(idx);
+                // Change the url hash to new step
+                this._setURLHash(selTab.attr("href"));
+                // Update controls
+                this._setAnchor(idx);
 
-      _showError(msg) {
-          console.error(msg);
-      }
+                // Get current step element
+                const curPage   = this._getPage(this.current_index);
+                // Get next step element
+                const selPage   = this._getPage(idx);
+                // transit the step
+                this._transit(selPage, curPage, stepDirection, () => {
+                    // Update the current index
+                    this.current_index  = idx;
+                    // Fix height with content
+                    this._fixHeight(idx);
+                    // Trigger "showStep" event
+                    this._triggerEvent("showTab", [selTab, idx, this._getStepPosition(idx)]);
+                });
+            });
+        }
 
-      // PUBLIC FUNCTIONS
+        _getShowable(idx, dir) {
+            let si = null;
+            const elmList = (dir == 'prev') ? $(this.tabs.slice(0, idx).get().reverse()) : this.tabs.slice(idx + 1);
+            // Find the next showable step in the direction
+            elmList.each((i, elm) => {
+                if (this._isEnabled($(elm))) {
+                    si = (dir == 'prev') ? idx - (i + 1) : i + idx + 1;
+                    return false;
+                }
+            });
+            return si;
+        }
 
-      goToTab(tabIndex) {
-          this._showTab(tabIndex);
-      }
+        _isShowable(elm) {
+            if (!this._isEnabled(elm)) {
+                return false;
+            }
+            return true;
+        }
 
-      setOptions(options) {
-          this.options  = $.extend(true, {}, this.options, options);
-          this._initOptions();
-      }
+        _isEnabled(elm) {
+            return (elm.hasClass(this.options.style.anchorDisabledCss) || elm.hasClass(this.options.style.anchorHiddenCss)) ? false : true;
+        }
 
-      loader(state) {
-          if (state === "show") {
-              this.main.addClass('st-loading');
-          } else {
-              this.main.removeClass('st-loading');
-          }
-      }
+        _getStepDirection(idx) {
+            return this.current_index < idx ? "forward" : "backward";
+        }
 
+        _getStepPosition(idx) {
+            if (idx === 0) {
+                return 'first';
+            } else if (idx === this.tabs.length - 1) {
+                return 'last';
+            }
+            return 'middle';
+        }
+
+        _getAnchor(idx) {
+            if (idx == null || idx == -1) return null;
+            return this.tabs.eq(idx);
+        }
+
+        _getPage(idx) {
+            if (idx == null || idx == -1) return null;
+            return this.pages.eq(idx);
+        }
+
+        _loadContent(idx, callback) {
+            if (!$.isFunction(this.options.getContent)) { callback(); return; }
+
+            const selPage       = this._getPage(idx);
+            if (!selPage) { callback(); return; }
+            // Get step direction
+            const stepDirection = this._getStepDirection(idx);
+            // Get step position
+            const stepPosition  = this._getStepPosition(idx);
+            // Get next step element
+            const selTab       = this._getAnchor(idx);
+
+            this.options.getContent(idx, stepDirection, stepPosition, selTab, (content) => {
+                if (content) selPage.html(content);
+                callback();
+            });
+        }
+
+        _transit(elmToShow, elmToHide, stepDirection, callback) {
+            const transitFn = $.fn.smartTab.transitions[this.options.transition.animation];
+            if ($.isFunction(transitFn)) {
+                transitFn(elmToShow, elmToHide, stepDirection, this, (res) => {
+                    if (res === false) {
+                        if (elmToHide !== null) elmToHide.hide();
+                        elmToShow.show();
+                    }
+                    callback();
+                });
+            } else {
+                if (elmToHide !== null) elmToHide.hide();
+                elmToShow.show();
+                callback();
+            }
+        }
+
+        _fixHeight(idx) {
+            if (this.options.autoAdjustHeight === false) {
+                this.container.css('height', 'auto');
+                return;
+            } 
+                
+            // Auto adjust height of the container
+            const contentHeight = this._getPage(idx).outerHeight();
+            if ($.isFunction(this.container.finish) && $.isFunction(this.container.animate) && contentHeight > 0) {
+                this.container.finish().animate({ height: contentHeight }, this.options.transition.speed);
+            } else {
+                this.container.css({ height: contentHeight > 0 ? contentHeight : 'auto' });
+            }
+        }
+
+        _setAnchor(idx) {
+            // Current step anchor > Remove other classes
+            if (this.current_index !== null && this.current_index >= 0) {
+                this.tabs.eq(this.current_index).removeClass(this.options.style.anchorActiveCss);
+            }
+
+            // Next step anchor > Remove other classes and add active class
+            this.tabs.eq(idx).addClass(this.options.style.anchorActiveCss);
+        }
+
+        // HELPER FUNCTIONS
+
+        _keyNav(e) {
+            if (!this.options.keyboard.keyNavigation) {
+                return;
+            }
+
+            // Keyboard navigation
+            if ($.inArray(e.which, this.options.keyboard.keyLeft) > -1) {
+                // left
+                this._navigate('prev');
+                e.preventDefault();
+            } else if ($.inArray(e.which, this.options.keyboard.keyRight) > -1) {
+                // right
+                this._navigate('next');
+                e.preventDefault();
+            } else if ($.inArray(e.which, this.options.keyboard.keyHome) > -1) {
+                // first
+                this._navigate('first');
+                e.preventDefault();
+            } else if ($.inArray(e.which, this.options.keyboard.keyEnd) > -1) {
+                // last
+                this._navigate('last');
+                e.preventDefault();
+            } else {
+                return; // exit this handler for other keys
+            }
+        }
+
+        _triggerEvent(name, params) {
+            // Trigger an event
+            var e = $.Event(name);
+            this.main.trigger(e, params);
+            if (e.isDefaultPrevented()) {
+                return false;
+            }
+            return e.result;
+        }
+
+        _setURLHash(hash) {
+            if (this.options.enableUrlHash && window.location.hash !== hash) {
+                history.pushState(null,null,hash);
+            }
+        }
+
+        _getURLHashIndex() {
+            if (this.options.enableUrlHash) {
+                // Get step number from url hash if available
+                var hash = window.location.hash;
+                if (hash.length > 0) {
+                    var elm = this.nav.find("a[href*='" + hash + "']");
+                    if (elm.length > 0) {
+                        return this.tabs.index(elm);
+                    }
+                }
+            }
+            return false;
+        }
+
+        _showError(msg) {
+            console.error(msg);
+        }
+
+        // Auto progress
+        _startAutoProgress() {
+            if (this.options.autoProgress.enabled && !this.autoProgressId) {
+                this.autoProgressId = setInterval(() => this._navigate('next'), this.options.autoProgress.interval);
+            }
+        }
+
+        _stopAutoProgress() {
+            if (this.autoProgressId) {
+                clearInterval(this.autoProgressId);
+                this.autoProgressId = null;
+            }
+        }
+
+        _restartAutoProgress() {
+            this._stopAutoProgress();
+            this._startAutoProgress();
+        }
+
+        // PUBLIC FUNCTIONS
+
+        goToTab(index) {
+            if (!this._isShowable(this.tabs.eq(index))) {
+                return;
+            }
+            this._showTab(index);
+        }
+
+        next() {
+            this._navigate('next');
+        }
+
+        prev() {
+            this._navigate('prev');
+        }
+
+        first() {
+            this._navigate('first');
+        }
+
+        last() {
+            this._navigate('last');
+        }
+
+        reset() {
+            // Clear css from steps except default, hidden and disabled
+            this.tabs.removeClass(this.options.style.anchorActiveCss);
+
+            // Reset all
+            this._setURLHash('#');
+            this._init();
+            this._load();
+        }
+
+        setOptions(options) {
+            this.options  = $.extend(true, {}, this.options, options);
+            this._init();
+        }
+
+        getOptions() {
+            return this.options;
+        }
+
+        getInfo() {
+            return {
+                currentPage: this.current_index ? this.current_index : 0,
+                totalPages: this.tabs ? this.tabs.length : 0
+            };
+        }
+
+        loader(state) {
+            this.main.toggleClass(this.options.style.loaderCss, (state === "show"));
+        }
+
+        fixHeight() {
+            this._fixHeight(this.current_index);
+        }
     }
 
     // Wrapper for the plugin
@@ -605,4 +560,140 @@
             }
         }
     };
-})(jQuery, window, document);
+
+
+    // Transition effects
+    $.fn.smartTab.transitions = {
+        fade: (elmToShow, elmToHide, stepDirection, mainObj, callback) => {
+            if (!$.isFunction(elmToShow.fadeOut)) { callback(false); return; }
+
+            if (elmToHide) {
+                elmToHide.fadeOut(mainObj.options.transition.speed, mainObj.options.transition.easing, () => {
+                    elmToShow.fadeIn(mainObj.options.transition.speed, mainObj.options.transition.easing, () => {
+                        callback();
+                    });
+                });
+            } else {
+                elmToShow.fadeIn(mainObj.options.transition.speed, mainObj.options.transition.easing, () => {
+                    callback();
+                });
+            }
+        },
+        slideSwing: (elmToShow, elmToHide, stepDirection, mainObj, callback) => {
+            if (!$.isFunction(elmToShow.slideDown)) { callback(false); return; }
+
+            if (elmToHide) {
+                elmToHide.slideUp(mainObj.options.transition.speed, mainObj.options.transition.easing, () => {
+                    elmToShow.slideDown(mainObj.options.transition.speed, mainObj.options.transition.easing, () => {
+                        callback();
+                    });
+                });
+            } else {
+                elmToShow.slideDown(mainObj.options.transition.speed, mainObj.options.transition.easing, () => {
+                    callback();
+                });
+            }
+        },
+        slideHorizontal: (elmToShow, elmToHide, stepDirection, mainObj, callback) => {
+            if (!$.isFunction(elmToShow.animate)) { callback(false); return; }
+
+            // Horizontal slide
+            const animFn = (elm, iniLeft, finLeft, cb) => {
+                elm.css({position:'absolute', left: iniLeft })
+                    .show()
+                    .animate({ left: finLeft }, 
+                        mainObj.options.transition.speed, 
+                        mainObj.options.transition.easing,
+                        cb);
+            };
+
+            if (mainObj.current_index == -1) {
+                // Set container height at page load 
+                mainObj.container.height(elmToShow.outerHeight());
+            }
+            const containerWidth  = mainObj.container.width();
+            if (elmToHide) {
+                const initCss1  = elmToHide.css(["position", "left"]);
+                const finLeft   = containerWidth * (stepDirection == 'backward' ? 1 : -1);
+                animFn(elmToHide, 0, finLeft, () => {
+                    elmToHide.hide().css(initCss1);
+                });
+            }
+
+            const initCss2  = elmToShow.css(["position"]);
+            const iniLeft   = containerWidth * (stepDirection == 'backward' ? -2 : 1);
+            animFn(elmToShow, iniLeft, 0, () => {
+                elmToShow.css(initCss2);
+                callback();
+            });
+        },
+        slideVertical: (elmToShow, elmToHide, stepDirection, mainObj, callback) => {
+            if (!$.isFunction(elmToShow.animate)) { callback(false); return; }
+
+            // Vertical slide
+            const animFn = (elm, iniTop, finTop, cb) => {
+                elm.css({ position:'absolute', top: iniTop })
+                    .show()
+                    .animate({ top: finTop }, 
+                        mainObj.options.transition.speed, 
+                        mainObj.options.transition.easing,
+                        cb);
+            };
+
+            if (mainObj.current_index == -1) {
+                // Set container height at page load 
+                mainObj.container.height(elmToShow.outerHeight());
+            }
+            const containerHeight = mainObj.container.height();
+            if (elmToHide) {
+                const initCss1  = elmToHide.css(["position", "top"]);
+                const finTop    = containerHeight * (stepDirection == 'backward' ? -1 : 1);
+                animFn(elmToHide, 0, finTop, () => {
+                    elmToHide.hide().css(initCss1);
+                });
+            }
+
+            const initCss2  = elmToShow.css(["position"]);
+            const iniTop    = containerHeight * (stepDirection == 'backward' ? 1 : -2);
+            animFn(elmToShow, iniTop, 0, () => {
+                elmToShow.css(initCss2);
+                callback();
+            });            
+        }, 
+        css: (elmToShow, elmToHide, stepDirection, mainObj, callback) => {
+            if (mainObj.options.transition.fwdHideCss.length == 0 || mainObj.options.transition.bckHideCss.length == 0 ) { callback(false); return; }
+            
+            // CSS Animation
+            const animFn = (elm, animation, cb) => {
+                if (!animation || animation.length == 0) cb();
+
+                elm.addClass(animation).one("animationend", (e) => {
+                    $(e.currentTarget).removeClass(animation);
+                    cb();
+                });
+                elm.addClass(animation).one("animationcancel", (e) => {
+                    $(e.currentTarget).removeClass(animation);
+                    cb('cancel');
+                });
+            };
+
+            const showCss = mainObj.options.transition.prefixCss + ' ' + (stepDirection == 'backward' ? mainObj.options.transition.bckShowCss : mainObj.options.transition.fwdShowCss);
+            if (elmToHide) {
+                const hideCss = mainObj.options.transition.prefixCss + ' ' + (stepDirection == 'backward' ? mainObj.options.transition.bckHideCss : mainObj.options.transition.fwdHideCss);
+                animFn(elmToHide, hideCss, () => {
+                    elmToHide.hide();
+
+                    animFn(elmToShow, showCss, () => {
+                        callback();
+                    });
+                    elmToShow.show();
+                });
+            } else {
+                animFn(elmToShow, showCss, () => {
+                    callback();
+                });
+                elmToShow.show();
+            }
+        }
+    };
+}));

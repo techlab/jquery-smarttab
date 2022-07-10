@@ -1,0 +1,65 @@
+.st-theme-forge {
+  & > .nav {
+    border-right: 1px solid var(--#{$var-prefix}anchor-default-secondary-color);
+
+    .nav-link {
+      position: relative;
+      height: 100%;
+      min-height: 100%;
+      padding: 10px;
+      color: var(--#{$var-prefix}anchor-default-primary-color);
+      border-style: solid;
+      border-width: 3px 0 1px 1px;
+      border-color: var(--#{$var-prefix}anchor-default-secondary-color);
+
+      &:hover, &:focus {
+        color: var(--#{$var-prefix}anchor-active-primary-color) !important;
+      }
+
+      &.active {
+        color: var(--#{$var-prefix}anchor-active-primary-color)!important;
+        border-top-color: var(--#{$var-prefix}anchor-active-primary-color);
+
+        &::after {
+          content: "";
+          position: absolute;
+          background: #ffffff;
+          height: 1px;
+          width: 100%;
+          left: 0px;
+          bottom: -1px;
+        }
+      }
+
+      &.disabled {
+        color: var(--#{$var-prefix}anchor-disabled-primary-color) !important;
+      }
+    }
+  }
+
+  // Vertical navigation style
+  &.st-vertical {
+
+    & > .nav {
+      border-top: 1px solid var(--#{$var-prefix}anchor-default-secondary-color);
+      border-right: unset;
+
+      .nav-link {
+        border-width: 0 1px 1px 3px;
+
+        &.active {
+          border-left-color: var(--#{$var-prefix}anchor-active-primary-color);
+
+          &::after {
+            height: 100%;
+            width: 1px;
+            top: 0px;
+            left: auto;
+            right: -1px;
+          }
+        }
+      }
+    }
+  }
+
+}

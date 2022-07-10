@@ -1,45 +1,25 @@
-// Colors
-$border-main-color              : #5bc0de;
-$nav-text-color                 : #bbbbbb;
-$nav-background-color           : #f9f9f9;
-$nav-active-text-color          : #ffffff;
-$nav-active-background-color    : #5bc0de;
-$nav-disabled-text-color        : #eeeeee;
-
 .st-theme-brick {
 
-  // Content style
-  & > .tab-content {
-
-    & > .tab-pane {
-      padding: 10px;
-    }
-  }
-
-  // Navigation style
   & > .nav {
-    background: $nav-background-color;
-    border-bottom: 2px solid $border-main-color;
+    border-color: var(--#{$var-prefix}anchor-active-primary-color);
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
 
     .nav-link {
-      position: relative;
       background: transparent;
-      border: transparent;
       height: 100%;
       min-height: 100%;
-      color: $nav-text-color !important;
-      padding: 10px;
+      color: var(--#{$var-prefix}anchor-default-primary-color)!important;
 
       &.active {
-        color: $nav-active-text-color !important;
-        background: $nav-active-background-color !important;
-        cursor: pointer;
+        color: var(--#{$var-prefix}anchor-active-secondary-color) !important;
+        background: var(--#{$var-prefix}anchor-active-primary-color) !important;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
       }
 
       &.disabled {
-        color: $nav-disabled-text-color !important;
+        color: var(--#{$var-prefix}anchor-disabled-primary-color) !important;
       }
     }
   }
@@ -47,11 +27,11 @@ $nav-disabled-text-color        : #eeeeee;
   // Vertical navigation style
   &.st-vertical {
     & > .nav {
-      border-right: 2px solid $border-main-color;
+      border-right-style: solid;
+      border-right-width: 2px;
       border-bottom: unset;
 
       .nav-link {
-
         &.active {
           border-top-left-radius: 8px;
           border-bottom-left-radius: 8px;

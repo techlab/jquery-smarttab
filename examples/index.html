@@ -1,172 +1,242 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>jQuery Smart Tab - The flexible jQuery tab control plugin</title>
+    <title>jQuery Smart Tab Demo - The flexible tab control plugin for jQuery</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Bootrap for the demo page -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+    <!-- Animate CSS for the css animation support if needed -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+
     <!-- Include SmartTab CSS -->
-    <link href="./css/smart_tab_all.min.css" rel="stylesheet" type="text/css" />
+    <link href="./css/smart_tab_all.css" rel="stylesheet" type="text/css" />
 
-    <!-- Demo Page Style - You don't need -->
-    <style>
-    body {
-      padding-right: 5%;
-      padding-left: 5%;
-    }
-    </style>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 </head>
 <body>
+  <br>
+  <div class="container">
 
-    <p>
-      <label>Theme:</label>
-      <select id="theme_selector">
-            <option value="default" selected>Default</option>
-            <option value="classic">Classic</option>
-            <option value="dark">Dark</option>
-            <option value="brick">Brick</option>
-            <option value="round">Round</option>
-            <option value="pills">Pills</option>
-            <option value="github">GitHub</option>
-            <option value="sourceforge">Sourceforge</option>
-            <option value="">No Theme</option>
-      </select>
+    <div class="mb-5 border-bottom">
 
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" id="is_vertical" value="1" />
-      <label for="is_vertical">Vertical</label>
+      <button class="btn btn-outline-primary btn-sm float-end mt-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+        More Settings
+      </button>
 
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" id="is_justified" value="1" checked />
-      <label for="is_justified">Justified</label>
+      <div class="mt-2 me-3 float-end">
+        <select id="theme_colors" class="form-select form-select-sm" aria-label="">
+          <option value="" disabled>Color</option>
+        </select>
+      </div>
+      
+      <div class="mt-2 me-3 float-end">
+        <select id="theme_selector" class="form-select form-select-sm" aria-label="">
+          <option value="" disabled>Theme</option>
+          <option value="basic" selected>Basic (Default)</option>
+          <option value="elite">Elite</option>
+          <option value="pills">Pills</option>
+          <option value="brick">Brick</option>
+          <option value="forge">Forge</option>
+          <option value="blocks">Blocks</option>
+        </select>                  
+      </div>
+      
+      <h1>jQuery Smart Tab Demo</h1>
+      <div class="mb-2 text-muted">
+        Click on the settings buttons for trying out different options
+        <div class="float-end text-muted me-3">
+          Tab Page: <span id="current-page"></span> of <span id="total-pages"></span>
+        </div>
+      </div>
 
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <label>Animation:</label>
-      <select id="animation">
-            <option value="none">None</option>
-            <option value="fade">Fade</option>
-            <option value="slide-horizontal">Slide Horizontal</option>
-            <option value="slide-vertical">Slide Vertical</option>
-            <option value="slide-swing">Slide Swing</option>
-      </select>
+      <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header border-bottom">
+          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Smart Tab Settings</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="mb-2">
+            <label for="animation" class="form-label">Transition</label>
+              <select id="animation" class="form-select form-select-sm" aria-label="">
+                <optgroup label="Buit-in Animations">
+                  <option value="none">None</option>
+                  <option value="fade">Fade</option>
+                  <option value="slideHorizontal" selected>Slide Horizontal</option>
+                  <option value="slideVertical">Slide Vertical</option>
+                  <option value="slideSwing">Slide Swing</option>
+                </optgroup>
+                <optgroup label="CSS Animations (External Plugin)">
+                  <option value="cssSlideH">Slide Horizontal</option>
+                  <option value="cssSlideV">Slide Vertical</option>
+                  <option value="cssFade">Fade</option>
+                  <option value="cssFadeSlideH">Fade + Slide Horizontal</option>
+                  <option value="cssFadeSlideV">Fade + Slide Vertical</option>
+                  <option value="cssFadeSlideCorner1">Fade + Slide Corner 1</option>
+                  <option value="cssFadeSlideCorner2">Fade + Slide Corner 2</option>
+                  <option value="cssBounce">Bounce</option>
+                  <option value="cssBounceSlideH">Bounce + Slide Horizontal</option>
+                  <option value="cssBounceSlideV">Bounce + Slide Vertical</option>
+                  <option value="cssBackSlideH">Back + Slide Horizontal</option>
+                  <option value="cssBackSlideV">Back + Slide Vertical</option>
+                  <option value="cssFlipH">Flip Horizontal</option>
+                  <option value="cssFlipV">Flip Vertical</option>
+                  <option value="cssLightspeed">Lightspeed</option>
+                  <option value="cssRotate">Rotate</option>
+                  <option value="cssRotateClock">Rotate Clockwise</option>
+                  <option value="cssRotateAntiClock">Rotate Anti Clockwise</option>
+                  <option value="cssZoom">Zoom</option>
+                </optgroup>
+              </select>
+          </div>
 
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <label>Go To:</label>
-      <select id="got_to_tab">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-      </select>
-    </p>
-    <br />
+          <fieldset class="mb-2" style="display: none;" id="color-list">
+            <!-- <legend class="col-form-label col-sm-2 col-form-label">Colors</legend> -->
+          </fieldset>
 
+          <div class="mb-2">
+            <h6 for="Other" class="form-label border-bottom">Other Settings</h6>
+
+            <div class="form-check">
+              <input class="form-check-input align-middle" type="checkbox" id="is_vertical" value="1" checked>
+              <label class="form-check-label align-middle" for="is_vertical">Vertical</label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input align-middle option-setting-checkbox" type="checkbox" id="is_justified" value="1" checked>
+              <label class="form-check-label align-middle" for="is_justified">Justified</label>
+            </div>
+            
+            <div class="form-check">
+              <input class="form-check-input align-middle option-setting-checkbox" type="checkbox" id="key_navigation" value="1" checked>
+              <label class="form-check-label align-middle" for="key_navigation">Keyboard Navigation</label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input align-middle option-setting-checkbox" type="checkbox" id="back_button_support" value="1" checked>
+              <label class="form-check-label align-middle" for="back_button_support">Back Button Support</label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input align-middle option-setting-checkbox" type="checkbox" id="autoAdjustHeight" value="1" checked>
+              <label class="form-check-label align-middle" for="autoAdjustHeight">Auto Adjust Height</label>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <h6 for="theme_selector" class="form-label border-bottom">External Controls</h6>
+            <button class="btn btn-secondary btn-sm" id="prev-btn" type="button">Previous</button>
+            <button class="btn btn-secondary btn-sm" id="next-btn" type="button">Next</button>
+            <button class="btn btn-danger btn-sm" id="reset-btn" type="button">Reset</button>
+          
+            <div class="input-group input-group-sm mt-2">
+              <select class="form-select" id="got_to_step" aria-label="Select step number">
+                <option selected>Choose step...</option>
+                <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              
+              <button class="btn btn-primary" id="btn-go-to" type="button">Go</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- SmartTab html -->
     <div id="smarttab">
-
-        <ul class="nav">
-            <li>
+        <ul class="nav" role="tablist">
+            <li class="nav-item" role="presentation">
               <a class="nav-link" href="#tab-1">
-                <strong>Tab 1</strong> This is tab description
+                Customer Details
               </a>
             </li>
-            <li>
+            <li class="nav-item" role="presentation">
               <a class="nav-link" href="#tab-2">
-                <strong>Tab 2</strong> This is tab description
+                Products Details
               </a>
             </li>
-            <li>
+            <li class="nav-item" role="presentation">
               <a class="nav-link" href="#tab-3">
-                <strong>Tab 3</strong> This is tab description
+                Shipping Details
               </a>
             </li>
-            <li>
-              <a class="nav-link" href="#tab-4">
-                <strong>Tab 4</strong> This is tab description
+            <li class="nav-item" role="presentation">
+              <a class="nav-link " href="#tab-4">
+                Confirm Order
               </a>
             </li>
         </ul>
 
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane" role="tabpanel">
-                <h3>Tab 1 Content</h3>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>
-            <div id="tab-2" class="tab-pane" role="tabpanel">
-                <h3>Tab 2 Content</h3>
-                <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </div>
-            </div>
-            <div id="tab-3" class="tab-pane" role="tabpanel">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>
-            <div id="tab-4" class="tab-pane" role="tabpanel">
-                <h3>Tab 4 Content</h3>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>
+          <div id="tab-1" class="tab-pane" role="tabpanel" aria-labelledby="tab-1">
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </div>
+          <div id="tab-2" class="tab-pane" role="tabpanel" aria-labelledby="tab-2">
+            <div>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </div>
+          </div>
+          <div id="tab-3" class="tab-pane" role="tabpanel" aria-labelledby="tab-3">
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </div>
+          <div id="tab-4" class="tab-pane" role="tabpanel" aria-labelledby="tab-4">
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </div>
         </div>
     </div>
 
+    <br> &nbsp;
+    </div>
+
+    <!-- Bootrap for the demo page -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
     <!-- Include jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
+
+    <!-- jQuery Slim 3.6  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 
     <!-- Include SmartTab JavaScript source -->
     <script type="text/javascript" src="./js/jquery.smartTab.min.js"></script>
 
+    <script type="text/javascript" src="./js/demo.js"></script>
+
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(function() {
+            // Step show event
+            $("#smarttab").on("showTab", function(e, anchorObject, stepIndex, stepDirection, stepPosition) {
+                $("#prev-btn").removeClass('disabled').prop('disabled', false);
+                $("#next-btn").removeClass('disabled').prop('disabled', false);
+                if(stepPosition === 'first') {
+                    $("#prev-btn").addClass('disabled').prop('disabled', true);
+                } else if(stepPosition === 'last') {
+                    $("#next-btn").addClass('disabled').prop('disabled', true);
+                } else {
+                    $("#prev-btn").removeClass('disabled').prop('disabled', false);
+                    $("#next-btn").removeClass('disabled').prop('disabled', false);
+                }
 
-            // SmartTab initialize
-            $('#smarttab').smartTab();
-
-
-            // Demo Button Events
-            $("#got_to_tab").on("change", function() {
-                // Go to tab
-                var tab_index = $(this).val() - 1;
-                $('#smarttab').smartTab("goToTab", tab_index);
-                return true;
+                // Get step info
+                let tabInfo = $('#smarttab').smartTab("getInfo");
+                $("#current-page").text(tabInfo.currentPage + 1);
+                $("#total-pages").text(tabInfo.totalPages);
             });
 
-            $("#is_vertical").on("click", function() {
-                // Change Orientation
-                var options = {
-                  orientation: ($(this).prop("checked") == true) ? 'vertical' : 'horizontal'
-                };
-                $('#smarttab').smartTab("setOptions", options);
-                return true;
-            });
-
-            $("#is_justified").on("click", function() {
-                // Change Justify
-                var options = {
-                  justified: $(this).prop("checked")
-                };
-
-                $('#smarttab').smartTab("setOptions", options);
-                return true;
-            });
-
-            $("#animation").on("change", function() {
-                // Change theme
-                var options = {
-                  transition: {
-                      animation: $(this).val()
-                  },
-                };
-                $('#smarttab').smartTab("setOptions", options);
-                return true;
-            });
-
-            $("#theme_selector").on("change", function() {
-                // Change theme
-                var options = {
-                  theme: $(this).val()
-                };
-                $('#smarttab').smartTab("setOptions", options);
-                return true;
+            // Smart Tab
+            $('#smarttab').smartTab({
+                selected: 0,
+                theme: 'basic', // basic, arrows, square, round, dots
+                transition: {
+                  animation:'slideHorizontal' // none|fade|slideHorizontal|slideVertical|slideSwing|css
+                },
+                autoProgress: {
+                  enabled: false
+                }
             });
 
         });

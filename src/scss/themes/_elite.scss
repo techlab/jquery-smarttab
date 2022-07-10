@@ -1,0 +1,77 @@
+.st-theme-elite {
+  border-left: 1px solid var(--#{$var-prefix}anchor-active-primary-color);
+  border-right: 1px solid var(--#{$var-prefix}anchor-active-primary-color);
+  border-bottom: 1px solid var(--#{$var-prefix}anchor-active-primary-color);
+  border-radius: .5em;
+
+  & > .nav {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--#{$var-prefix}anchor-active-primary-color);
+    margin-right: -1px;
+    margin-left: -1px;
+
+    .nav-link {      
+      border: 1px solid transparent;
+      border-bottom-width: 0;
+      color: var(--#{$var-prefix}anchor-default-primary-color);
+
+      &.active {
+        color: var(--#{$var-prefix}anchor-active-primary-color) !important;
+        border-color: var(--#{$var-prefix}anchor-active-primary-color) !important;
+        border-top-left-radius: .5em;
+        border-top-right-radius: .5em;
+
+        &::after {
+          content: "";
+          position: absolute;
+          background: #ffffff;
+          height: 1px;
+          width: 100%;
+          left: 0px;
+          bottom: -1px;
+        }
+      }
+
+      &.disabled {
+        color: var(--#{$var-prefix}anchor-disabled-primary-color) !important;
+      }
+    }
+  }
+
+  // Vertical navigation style
+  &.st-vertical {
+    border-left: unset;
+    border-top: 1px solid var(--#{$var-prefix}anchor-active-primary-color);
+    border-right: 1px solid var(--#{$var-prefix}anchor-active-primary-color);
+    border-bottom: 1px solid var(--#{$var-prefix}anchor-active-primary-color);
+
+    & > .nav {
+      border-right: 1px solid var(--#{$var-prefix}anchor-active-primary-color);
+      border-bottom: unset;
+      margin-top: -1px;
+      margin-bottom: -1px;
+      margin-right: 0;
+      margin-left: 0;
+
+      .nav-link {
+        border-bottom-width: 1px;
+        border-right-width: 0;
+
+        &.active {
+          border-top-left-radius: .5em;
+          border-bottom-left-radius: .5em;
+          border-top-right-radius: unset;
+
+          &::after {
+            height: 100%;
+            width: 1px;
+            top: 0px;
+            left: auto;
+            right: -1px;
+          }
+        }
+      }
+    }
+  }
+
+}

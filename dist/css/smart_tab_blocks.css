@@ -1,15 +1,30 @@
 /*!
- * jQuery SmartTab v3
- * The flexible jQuery tab control plugin
- * http://www.techlaboratory.net/jquery-smarttab
- *
- * Created by Dipu Raj
- * http://dipu.me
- *
- * Licensed under the terms of MIT License
- * https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
- */
-/* SmartTab Base Styles */
+* jQuery SmartTab v4.x
+* The flexible tab control plugin for jQuery
+* http://www.techlaboratory.net/jquery-smarttab
+*
+* Created by Dipu Raj (http://dipu.me)
+*
+* Licensed under the terms of the MIT License
+* https://github.com/techlab/jquery-smarttab/blob/master/LICENSE
+*/
+/* Variables */
+/* Root */
+:root {
+    --st-background: unset;
+    --st-border: 1px solid #eeeeee;
+    --st-anchor-default-primary-color: #60bef5;
+    --st-anchor-default-secondary-color: #dbe0e5;
+    --st-anchor-active-primary-color: #009EF7;
+    --st-anchor-active-secondary-color: #ffffff;
+    --st-anchor-disabled-primary-color: #eeeeee;
+    --st-anchor-disabled-secondary-color: #dbe0e5;
+    --st-loader-color: #009EF7;
+    --st-loader-background-color: #f8f9fa;
+    --st-loader-background-wrapper-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Base Styles */
 .st {
     position: relative;
 }
@@ -23,6 +38,11 @@
 .st > .tab-content {
     position: relative;
     overflow: hidden;
+    height: auto;
+}
+
+.st > .tab-content > .tab-pane {
+    padding: 0.8rem;
 }
 
 .st > .nav {
@@ -42,25 +62,30 @@
 }
 
 .st > .nav .nav-link {
+    position: relative;
     display: block;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
+    height: 100%;
+    min-height: 100%;
     text-decoration: none;
-    outline: 0 !important;
 }
 
 .st > .nav .nav-link:hover, .st > .nav .nav-link:active, .st > .nav .nav-link:focus {
     text-decoration: none;
-    outline: 0 !important;
 }
 
 .st > .nav .nav-link::-moz-focus-inner {
-    border: 0 !important;
+    border: 0;
 }
 
 .st > .nav .nav-link.disabled {
-    color: #ccc !important;
     pointer-events: none;
-    cursor: default;
+    cursor: not-allowed;
+}
+
+.st > .nav .nav-link.hidden {
+    display: none;
+    visibility: none;
 }
 
 .st.st-vertical {
@@ -94,7 +119,6 @@
 .st.st-loading {
     -webkit-user-select: none;
     -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
@@ -107,21 +131,20 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--st-loader-background-wrapper-color);
     z-index: 2;
-    transition: all .2s ease;
 }
 
 .st.st-loading::before {
-    content: '';
+    content: "";
     display: inline-block;
     position: absolute;
     top: 45%;
     left: 45%;
     width: 2rem;
     height: 2rem;
-    border: 10px solid #f3f3f3;
-    border-top: 10px solid #3498db;
+    border: 10px solid var(--st-loader-color);
+    border-top: 10px solid var(--st-loader-background-color);
     border-radius: 50%;
     z-index: 10;
     -webkit-animation: spin 1s linear infinite;
@@ -148,37 +171,21 @@
     }
 }
 
-/* SmartTab Theme: Dark */
-.st-theme-dark {
-    border: 1px solid #000000;
-    color: rgba(255, 255, 255, 0.95);
-    background: #181c20;
-}
-
-.st-theme-dark > .tab-content > .tab-pane {
-    padding: 10px;
-}
-
-.st-theme-dark > .nav {
-    background: #0D0F12;
-}
-
-.st-theme-dark > .nav .nav-link {
+/* Theme Styles */
+.st-theme-blocks > .nav .nav-link {
     position: relative;
-    background: transparent;
-    border: transparent;
     height: 100%;
     min-height: 100%;
-    color: #aaaaaa !important;
-    padding: 10px;
+    color: var(--st-anchor-default-primary-color);
+    border-radius: 0.475rem;
 }
 
-.st-theme-dark > .nav .nav-link.active {
-    color: rgba(255, 255, 255, 0.95) !important;
-    background: #181c20 !important;
-    cursor: pointer;
+.st-theme-blocks > .nav .nav-link.active {
+    box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.3);
+    color: var(--st-anchor-active-secondary-color) !important;
+    background-color: var(--st-anchor-active-primary-color);
 }
 
-.st-theme-dark > .nav .nav-link.disabled {
-    color: #555555 !important;
+.st-theme-blocks > .nav .nav-link.disabled {
+    color: var(--st-anchor-disabled-primary-color) !important;
 }

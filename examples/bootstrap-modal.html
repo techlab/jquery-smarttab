@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>jQuery Smart Tab Ajax Demo - The flexible tab control plugin for jQuery</title>
+    <title>jQuery Smart Tab Bootstrap Modal Demo - The flexible tab control plugin for jQuery</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -35,8 +35,8 @@
       <div class="mt-2 me-3 float-end">
         <select id="theme_selector" class="form-select form-select-sm" aria-label="">
           <option value="" disabled>Theme</option>
-          <option value="basic">Basic (Default)</option>
-          <option value="elite" selected>Elite</option>
+          <option value="basic" selected>Basic (Default)</option>
+          <option value="elite">Elite</option>
           <option value="pills">Pills</option>
           <option value="brick">Brick</option>
           <option value="forge">Forge</option>
@@ -44,12 +44,9 @@
         </select>                  
       </div>
       
-      <h1>jQuery Smart Tab Ajax Demo</h1>
+      <h1>jQuery Smart Tab Bootstrap Modal</h1>
       <div class="mb-2 text-muted">
-        Shows the tab content loaded via ajax call for each step
-        <div class="float-end text-muted me-3">
-          Tab Page: <span id="current-page"></span> of <span id="total-pages"></span>
-        </div>
+        Demo shows jQuery Smart Tab inside a Bootstrap Modal        
       </div>
 
       <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -63,8 +60,8 @@
               <select id="animation" class="form-select form-select-sm" aria-label="">
                 <optgroup label="Buit-in Animations">
                   <option value="none">None</option>
-                  <option value="fade" selected>Fade</option>
-                  <option value="slideHorizontal">Slide Horizontal</option>
+                  <option value="fade">Fade</option>
+                  <option value="slideHorizontal" selected>Slide Horizontal</option>
                   <option value="slideVertical">Slide Vertical</option>
                   <option value="slideSwing">Slide Swing</option>
                 </optgroup>
@@ -147,35 +144,76 @@
       </div>
     </div>
 
-    <!-- SmartTab html -->
-    <div id="smarttab">
-        <ul class="nav" role="tablist">
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" href="#tab-1" data-repo="jquery-smarttab">
-                jQuery Smart Tab
-              </a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" href="#tab-2" data-repo="jquery-smartwizard">
-                jQuery Smart Wizard
+    <!-- Button trigger modal -->
+    <div class="text-center">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#swModal">
+        Click here to launch jQuery Smart Wizard on Bootstrap Modal
+      </button>
+    </div>
 
-              </a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" href="#tab-3" data-repo="jquery-smartcart">
-                jQuery Smart Cart
-              </a>
-            </li>
-        </ul>
+        <!-- Modal -->
+        <div class="modal fade" id="swModal" tabindex="-1" aria-labelledby="swModalLabel" aria-hidden="true">
+          <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="swModalLabel">Smart Wizard on Bootstrap Modal</h5>
+    
+                <!-- <div class="float-end text-muted ms-5">
+                  Step number: <span id="sw-current-step"></span> of <span id="sw-total-step"></span>
+                </div> -->
+                <div class="float-end text-muted ms-5">
+                  Tab Page: <span id="current-page"></span> of <span id="total-pages"></span>
+                </div>
+    
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
 
-        <div class="tab-content">
-          <div id="tab-1" class="tab-pane" role="tabpanel" aria-labelledby="tab-1">
-          </div>
-          <div id="tab-2" class="tab-pane" role="tabpanel" aria-labelledby="tab-2">
-          </div>
-          <div id="tab-3" class="tab-pane" role="tabpanel" aria-labelledby="tab-3">
-          </div>
+                <!-- SmartTab html -->
+                <div id="smarttab">
+                    <ul class="nav" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link" href="#tab-1">
+                            Customer Details
+                          </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link" href="#tab-2">
+                            Products Details
+                          </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link" href="#tab-3">
+                            Shipping Details
+                          </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link " href="#tab-4">
+                            Confirm Order
+                          </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                      <div id="tab-1" class="tab-pane" role="tabpanel" aria-labelledby="tab-1">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                      </div>
+                      <div id="tab-2" class="tab-pane" role="tabpanel" aria-labelledby="tab-2">
+                        <div>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </div>
+                      </div>
+                      <div id="tab-3" class="tab-pane" role="tabpanel" aria-labelledby="tab-3">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                      </div>
+                      <div id="tab-4" class="tab-pane" role="tabpanel" aria-labelledby="tab-4">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                      </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
+      </div>
     </div>
 
     <br> &nbsp;
@@ -196,63 +234,6 @@
     <script type="text/javascript" src="./js/demo.js"></script>
 
     <script type="text/javascript">
-
-        function provideContent(idx, stepDirection, stepPosition, selStep, callback) {
-          // Only get ajax content on the forward movement
-          let repo    = selStep.data('repo');
-          let ajaxURL = "https://api.npms.io/v2/search?q=" + repo;
-          // Ajax call to fetch your content
-          $.ajax({
-              method  : "GET",
-              url     : ajaxURL,
-              beforeSend: function( xhr ) {
-                  // Show the loader
-                  $('#smarttab').smartTab("loader", "show");
-              }
-          }).done(function( res ) {
-              let data = res.results[0];
-              
-              let keywordsHtml = '';
-              data.package.keywords.forEach(keyword =>  keywordsHtml += `<span class="badge bg-secondary me-1">${keyword}</span>`);
-
-              let popularity = parseInt(data.score.detail.popularity * 100);
-              let quality = parseInt(data.score.detail.quality * 100);
-              let maintenance = parseInt(data.score.detail.maintenance * 100);
-
-              var html = `<div class="card w-100 border-0" >
-                          <div class="card-body">
-                            <h5 class="card-title"><a href="${data.package.links.repository}">${data.package.name}</a>  <span class="badge bg-secondary">${data.package.version}</span></h5>
-                            <p class="card-text">${data.package.description}</p>
-                            <p class="card-text"><small class="text-muted">Created by ${data.package.author.name}</small></p>
-                          </div>
-                          <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><a class="card-link" href="${data.package.links.homepage}">Homepage</a> <a class="card-link" href="${data.package.links.npm}">Npm</a> <a class="card-link" href="${data.package.links.bugs}">Bug</a> </li>
-                            <li class="list-group-item">${keywordsHtml}</li>
-                            <li class="list-group-item">
-                              Popularity: <span class="badge bg-secondary me-1">${popularity}</span> 
-                              Quality: <span class="badge bg-secondary me-1">${quality}</span>
-                              Maintenance: <span class="badge bg-secondary me-1">${maintenance}</span>
-                            </li>
-                          </ul>
-                        </div>`;
-
-              // Resolve the Promise with the tab content
-              callback(html);
-
-              // Hide the loader
-              $('#smarttab').smartTab("loader", "hide");
-              $('#smarttab').smartTab("fixHeight");
-          }).fail(function(err) {
-              // Reject the Promise with error message to show as tab content
-              callback( "An error loading the resource" );
-
-              // Hide the loader
-              $('#smarttab').smartTab("loader", "hide");
-          });
-
-          callback();
-        }
-
         $(function() {
             // Step show event
             $("#smarttab").on("showTab", function(e, anchorObject, stepIndex, stepDirection, stepPosition) {
@@ -276,11 +257,10 @@
             // Smart Tab
             $('#smarttab').smartTab({
                 selected: 0,
-                theme: 'elite', // basic, arrows, square, round, dots
+                theme: 'pills', 
                 transition: {
                   animation:'fade' // none|fade|slideHorizontal|slideVertical|slideSwing|css
-                },
-                getContent: provideContent
+                }
             });
 
         });
