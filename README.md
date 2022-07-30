@@ -3,12 +3,13 @@
 
 [![Build Status](https://travis-ci.org/techlab/jquery-smarttab.svg?branch=master)](https://travis-ci.org/techlab/jquery-smarttab)
 [![npm version](https://badge.fury.io/js/jquery-smarttab.svg)](https://badge.fury.io/js/jquery-smarttab)
-[![Latest Stable Version](https://poser.pugx.org/techlab/jquery-smarttab/v/stable)](https://packagist.org/packages/techlab/jquery-smarttab)
+[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/jquery-smarttab/badge?style=rounded)](https://www.jsdelivr.com/package/npm/jquery-smarttab)
+[![Npm Downloadsl](https://badgen.net/npm/dm/jquery-smarttab?icon=npm)](https://www.npmjs.com/package/jquery-smarttab)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/techlab/jquery-smarttab/master/LICENSE)
 [![GitHub Sponsor](https://img.shields.io/badge/Sponsor-techlab-blue.svg?logo=github)](https://github.com/sponsors/techlab)
 [![Donate on Paypal](https://img.shields.io/badge/PayPal-dipuraj-blue.svg)](https://www.paypal.me/dipuraj)
 
-Smart Tab is a flexible and heavily customizable **jQuery Tab control plugin**.
+Smart Tab is a flexible and heavily customizable **tab control plugin for jQuery**.
 
 > If you think it is cool, you should also check it's sibling [React Smart Tab](http://techlaboratory.net/react-smarttab)
 

@@ -1,5 +1,5 @@
 /*!
-* jQuery SmartTab v4.0.1
+* jQuery SmartTab v4.0.2
 * The flexible tab control plugin for jQuery
 * http://www.techlaboratory.net/jquery-smarttab
 *
@@ -41,7 +41,7 @@
     // Default options
     const defaults = {
         selected: 0, // Initial selected tab, 0 = first tab
-        theme: 'basic', // theme, related css need to include for other than default theme
+        theme: 'basic', // Theme, related css need to include for other than default theme
         justified: true, // Nav menu justification. true/false
         autoAdjustHeight: true, // Automatically adjust content height
         backButtonSupport: true, // Enable the back button support
@@ -175,13 +175,10 @@
         }
 
         _setElements() {
-            // Set the main element
-            this.main.addClass(this.options.style.mainCss);
-
-            // Set theme option
+            // Set the main element classes including theme css
             this.main.removeClass((i, className) => {
                 return (className.match(new RegExp('(^|\\s)' + this.options.style.themePrefixCss + '\\S+','g')) || []).join(' ');
-            }).addClass(this.options.style.themePrefixCss + this.options.theme);
+            }).addClass(this.options.style.mainCss + ' ' + this.options.style.themePrefixCss + this.options.theme);
             
             // Set justify option
             this.main.toggleClass(this.options.style.justifiedCss, this.options.justified);
@@ -279,13 +276,14 @@
                 const selPage   = this._getPage(idx);
                 // transit the step
                 this._transit(selPage, curPage, stepDirection, () => {
-                    // Update the current index
-                    this.current_index  = idx;
                     // Fix height with content
                     this._fixHeight(idx);
                     // Trigger "showStep" event
                     this._triggerEvent("showTab", [selTab, idx, this._getStepPosition(idx)]);
                 });
+
+                // Update the current index
+                this.current_index  = idx;
             });
         }
 
@@ -356,6 +354,7 @@
 
         _transit(elmToShow, elmToHide, stepDirection, callback) {
             const transitFn = $.fn.smartTab.transitions[this.options.transition.animation];
+            this._stopAnimations();
             if ($.isFunction(transitFn)) {
                 transitFn(elmToShow, elmToHide, stepDirection, this, (res) => {
                     if (res === false) {
@@ -368,6 +367,13 @@
                 if (elmToHide !== null) elmToHide.hide();
                 elmToShow.show();
                 callback();
+            }
+        }
+
+        _stopAnimations() {
+            if ($.isFunction(this.container.finish)) {
+                this.pages.finish();
+                this.container.finish();
             }
         }
 

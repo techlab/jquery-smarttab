@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+v4.0.2
+-----
+- **Fixed:** Fast navigation result in improper page selection 
+- **Changed:** Code improvements 
 
 v4.0.1
 -----

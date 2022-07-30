@@ -1,8 +1,8 @@
 {
   "name": "jquery-smarttab",
   "title": "jQuery Smart Tab",
-  "version": "v4.0.1",
-  "description": "The flexible jQuery tab control plugin",
+  "version": "v4.0.2",
+  "description": "The flexible tab control plugin for jQuery",
   "author": {
     "name": "Dipu Raj",
     "email": "hello.techlab@gmail.com",

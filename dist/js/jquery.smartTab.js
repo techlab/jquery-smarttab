@@ -9,7 +9,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 /*!
-* jQuery SmartTab v4.0.1
+* jQuery SmartTab v4.0.2
 * The flexible tab control plugin for jQuery
 * http://www.techlaboratory.net/jquery-smarttab
 *
@@ -51,7 +51,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     selected: 0,
     // Initial selected tab, 0 = first tab
     theme: 'basic',
-    // theme, related css need to include for other than default theme
+    // Theme, related css need to include for other than default theme
     justified: true,
     // Nav menu justification. true/false
     autoAdjustHeight: true,
@@ -219,12 +219,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       value: function _setElements() {
         var _this2 = this;
 
-        // Set the main element
-        this.main.addClass(this.options.style.mainCss); // Set theme option
-
+        // Set the main element classes including theme css
         this.main.removeClass(function (i, className) {
           return (className.match(new RegExp('(^|\\s)' + _this2.options.style.themePrefixCss + '\\S+', 'g')) || []).join(' ');
-        }).addClass(this.options.style.themePrefixCss + this.options.theme); // Set justify option
+        }).addClass(this.options.style.mainCss + ' ' + this.options.style.themePrefixCss + this.options.theme); // Set justify option
 
         this.main.toggleClass(this.options.style.justifiedCss, this.options.justified);
       }
@@ -331,14 +329,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
 
           _this4._transit(selPage, curPage, stepDirection, function () {
-            // Update the current index
-            _this4.current_index = idx; // Fix height with content
-
+            // Fix height with content
             _this4._fixHeight(idx); // Trigger "showStep" event
 
 
             _this4._triggerEvent("showTab", [selTab, idx, _this4._getStepPosition(idx)]);
-          });
+          }); // Update the current index
+
+
+          _this4.current_index = idx;
         });
       }
     }, {
@@ -433,6 +432,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       value: function _transit(elmToShow, elmToHide, stepDirection, callback) {
         var transitFn = $.fn.smartTab.transitions[this.options.transition.animation];
 
+        this._stopAnimations();
+
         if ($.isFunction(transitFn)) {
           transitFn(elmToShow, elmToHide, stepDirection, this, function (res) {
             if (res === false) {
@@ -446,6 +447,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
           if (elmToHide !== null) elmToHide.hide();
           elmToShow.show();
           callback();
+        }
+      }
+    }, {
+      key: "_stopAnimations",
+      value: function _stopAnimations() {
+        if ($.isFunction(this.container.finish)) {
+          this.pages.finish();
+          this.container.finish();
         }
       }
     }, {
