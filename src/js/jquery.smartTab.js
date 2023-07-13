@@ -556,7 +556,12 @@
             let instance = $.data(this[0], 'smartTab');
 
             if (options === 'destroy') {
-                $.data(this, 'smartTab', null);
+                if (instance != null) {
+                    instance.tabs.off("click");
+                    instance.main.data('click-init', false)
+                    $.data(this[0], 'smartTab', null);
+                }
+                return this;
             }
 
             if (instance instanceof SmartTab && typeof instance[options] === 'function') {
